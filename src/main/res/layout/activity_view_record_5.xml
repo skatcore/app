@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0sp"
+    android:paddingRight="0sp"
+    android:weightSum="6">
+
+    <TextView
+        android:id="@+id/tvId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:padding="1sp"
+        android:ellipsize="marquee"
+        android:textSize="20sp"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/tvSpieler1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="1sp"
+        android:ellipsize="marquee"
+        android:textSize="20sp"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/tvSpieler2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_weight="1"
+        android:padding="1sp"
+        android:ellipsize="marquee"
+        android:textSize="20sp"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/tvSpieler3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="1sp"
+        android:ellipsize="marquee"
+        android:textSize="20sp"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/tvSpieler4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="1sp"
+        android:ellipsize="marquee"
+        android:textSize="20sp"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/tvSpieler5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="1sp"
+        android:ellipsize="marquee"
+        android:textSize="20sp"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/tvSpiel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="1sp"
+        android:ellipsize="marquee"
+        android:textSize="20sp"
+        android:maxLines="1" />
+
+</LinearLayout>

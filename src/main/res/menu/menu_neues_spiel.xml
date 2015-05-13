@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mettwurst.skatdb.NeuesSpielActivity">
+    <item
+        android:id="@+id/menuSpielStarten"
+        android:orderInCategory="100"
+        android:title="@string/menuSpielStart"
+        android:showAsAction="always"/>
+</menu>

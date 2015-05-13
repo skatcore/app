@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.mettwurst.skatdb.NeuesSpielActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDatumUhrzeit"
+        android:layout_gravity="right" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSpielerzahl"
+        android:layout_gravity="right" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edSpielername1"
+        android:hint="Spieler 1"
+        android:enabled="true"
+        android:inputType="textCapWords|textAutoCorrect" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edSpielername2"
+        android:enabled="true"
+        android:hint="Spieler 2"
+        android:inputType="textCapWords|textAutoCorrect" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edSpielername3"
+        android:enabled="true"
+        android:hint="Spieler 3"
+        android:inputType="textCapWords|textAutoCorrect" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edSpielername4"
+        android:visibility="invisible"
+        android:enabled="true"
+        android:hint="Spieler 4"
+        android:inputType="textCapWords|textAutoCorrect" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edSpielername5"
+        android:visibility="invisible"
+        android:enabled="true"
+        android:hint="Spieler 5"
+        android:inputType="textCapWords|textAutoCorrect" />
+</LinearLayout>

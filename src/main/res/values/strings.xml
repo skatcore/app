@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SkatDb</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="empty_list_text" />
+    <string name="title_activity_add_skatspiel">AddSkatspielActivity</string>
+    <string name="title_activity_modify_skatspiel">ModifySkatspielActivity</string>
+    <string name="menuAddSkatspiel">Add Spiel</string>
+    <string name="menuExport">Export</string>
+    <string name="menuExportAll">Export all</string>
+    <string name="btnAddSkatspiel">Add Skatspiel</string>
+    <string name="btnUpdate">Update</string>
+    <string name="btnDelete">Delete</string>
+    <string name="title_activity_add_ansage">AddAnsageActivity</string>
+    <string name="menuAddAnsage">Add Ansage</string>
+    <string name="tvSolist">Solist</string>
+    <string name="tvSpiel">Spiel</string>
+    <string name="rbGrand">Grand</string>
+    <string name="rbKreuz">Kreuz</string>
+    <string name="rbPik">Pik</string>
+    <string name="rbHerz">Herz</string>
+    <string name="rbKaro">Karo</string>
+    <string name="rbNull">Null</string>
+    <string name="rbRamsch">Ramsch</string>
+    <string name="tvAnsagen">Ansagen</string>
+    <string name="cbHandspiel">Hand</string>
+    <string name="cbOuvert">Ouvert</string>
+    <string name="cbSchneiderAngesagt">Schneider</string>
+    <string name="cbSchwarzAngesagt">Schwarz</string>
+    <string name="cbKontra">Kontra</string>
+    <string name="cbRe">Re</string>
+    <string name="tvReizwert">Reizwert</string>
+    <string name="tvAufspiel">Aufspiel:</string>
+    <string name="title_activity_add_skatspiel_null">AddSkatspielNullActivity</string>
+    <string name="tvSolistAuswertung">Solist:</string>
+    <string name="rbGewonnen">Gewonnen</string>
+    <string name="rbVerloren">Verloren</string>
+    <string name="tvJungfrauenAngesagt">Jungfrau angesagt</string>
+    <string name="edPunkteReHint">Punkte Re</string>
+    <string name="tvJungfrauAngesagt">Jungfrau angesagt</string>
+    <string name="cbSchwarzGespielt">Schwarz gespielt</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="btnSpielFortsetzen">Spiel fortsetzen</string>
+    <string name="btnNeuesSpiel">Neues Spiel</string>
+    <string name="btnSpielLaden">Spiel laden</string>
+    <string name="title_activity_neues_spiel">NeuesSpielActivity</string>
+    <string name="tvSpielerzahl">3 Spieler</string>
+    <string name="tvSpielernamen">Spieler</string>
+    <string name="menuSpielStart">Start</string>
+    <string name="title_activity_inspect_skatrunde">InspectSkatrundeActivity</string>
+    <string name="editSkatrunde">Bearbeiten</string>
+    <string name="tvISolist">Solist:</string>
+    <string name="menuSaveUpdate">Save</string>
+
+</resources>
