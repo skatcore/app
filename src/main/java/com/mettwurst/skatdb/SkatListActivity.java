@@ -169,8 +169,6 @@ public class SkatListActivity extends Activity {
                 String spieler5 = getString(view.findViewById(R.id.tvSpieler5));
                 String spiel    = getString(view.findViewById(R.id.tvSpiel));
 
-
-
                 Intent modify_intent = new Intent(getApplicationContext(), ModifySkatrundeActivity.class);
                 modify_intent.putExtra("id", id);
                 modify_intent.putExtra("spieler1", spieler1);
@@ -259,3 +257,4 @@ public class SkatListActivity extends Activity {
         return res;
     }
 }
+// TODO: this is just a test. (Github)
