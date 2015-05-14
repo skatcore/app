@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,25 +15,13 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+/** TODO
+    - bockUndRamsch-Feedback lesen und anwenden.
+    - Runden löschen (dabei Gesamtpunkte beachten!).
+    - Runden bearbeiten (-----"-----).
 
-import jxl.Workbook;
-import jxl.WorkbookSettings;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
-
-// Used for Excel export
-
-/* TODO
-    - Gesamtpunkte der Spieler mithalten und weitergeben
-    - bockUndRamsch-Feedback lesen und anwenden
-    - Neues Spiel erstellen (+Spieler registrieren) oder laden
-    - Runden löschen (dabei Gesamtpunkte beachten!)
-    - Runden bearbeiten (-----"-----)
+    Bugs
+    - Wenn man ein Spiel laedt, wird nicht erkannt, ob Pflichtramsch war.
  */
 
 
@@ -47,6 +35,11 @@ public class SkatListActivity extends Activity {
     private static int spielerzahl;
     private static int geber;
 
+    public static final int INTENT_FLAG_DEFAULT             = 0;
+    public static final int INTENT_FLAG_NEUES_SPIEL         = 1;
+    public static final int INTENT_FLAG_RUNDE_EINGETRAGEN   = 2;
+    public static final int INTENT_FLAG_SPIEL_FORTSETZEN    = 3;
+
     private DBController dbCon;
 
     private static int bock_count = 0;
@@ -57,51 +50,76 @@ public class SkatListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skat_list);
+        setTitle("Skatliste");
+
+        dbCon = new DBController(this);
+        dbCon.open();
 
         Intent intent = getIntent();
-        boolean neuesSpiel = intent.getBooleanExtra("neuesSpiel", false);
-        boolean rundeEingetragen = intent.getBooleanExtra("rundeEingetragen", false);
-        if (neuesSpiel) {
-            // Neues Spiel aus dem Hauptmenu
-            datum = intent.getStringExtra("datum");
-            spieler1 = intent.getStringExtra("spieler1");
-            spieler2 = intent.getStringExtra("spieler2");
-            spieler3 = intent.getStringExtra("spieler3");
-            spieler4 = intent.getStringExtra("spieler4");
-            spieler5 = intent.getStringExtra("spieler5");
-            spielerzahl = intent.getIntExtra("spielerzahl", -1);
-            geber = 1;
-            pflichtramsch_count = 0;
-            bockRamschStatus = 0;
-        }  else if (rundeEingetragen) {
-            boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
-            boolean warRamsch = intent.getBooleanExtra("warRamsch", false);
-            switch (bockRamschStatus) {
-                case 0:
-                    if (bockUndRamsch) {
-                        bock_count += spielerzahl;
-                        pflichtramsch_count += spielerzahl;
-                        bockRamschStatus = 1;
-                    }
-                    break;
-                case 1:
-                    bock_count -= 1;
-                    if (bock_count % spielerzahl == 0) {
-                        bockRamschStatus = 2;
-                    }
-                    break;
-                case 2:
-                    if (warRamsch) {
-                        // Bei Grand Hand nicht reduzieren
-                        pflichtramsch_count -= 1;
-                        if (pflichtramsch_count % spielerzahl == 0) {
-                            bockRamschStatus = 0;
+        int intentFlag = intent.getIntExtra("intentFlag", INTENT_FLAG_DEFAULT);
+        switch (intentFlag) {
+            case INTENT_FLAG_NEUES_SPIEL:
+                datum = intent.getStringExtra("datum");
+                spieler1 = intent.getStringExtra("spieler1");
+                spieler2 = intent.getStringExtra("spieler2");
+                spieler3 = intent.getStringExtra("spieler3");
+                spieler4 = intent.getStringExtra("spieler4");
+                spieler5 = intent.getStringExtra("spieler5");
+                spielerzahl = intent.getIntExtra("spielerzahl", -1);
+                geber = 1;
+                pflichtramsch_count = 0;
+                bockRamschStatus = 0;
+                break;
+            case INTENT_FLAG_RUNDE_EINGETRAGEN:
+                boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
+                boolean warRamsch = intent.getBooleanExtra("warRamsch", false);
+                switch (bockRamschStatus) {
+                    case 0:
+                        if (bockUndRamsch) {
+                            bock_count += spielerzahl;
+                            pflichtramsch_count += spielerzahl;
+                            bockRamschStatus = 1;
                         }
-                    }
-                    geber -= 1; // Grand Hand anstelle von Ramsch
-                    break;
-            }
-            geber += 1;
+                        break;
+                    case 1:
+                        bock_count -= 1;
+                        if (bock_count % spielerzahl == 0) {
+                            bockRamschStatus = 2;
+                        }
+                        break;
+                    case 2:
+                        if (warRamsch) {
+                            // Bei Grand Hand nicht reduzieren
+                            pflichtramsch_count -= 1;
+                            if (pflichtramsch_count % spielerzahl == 0) {
+                                bockRamschStatus = 0;
+                            }
+                        }
+                        geber -= 1; // Grand Hand anstelle von Ramsch
+                        break;
+                }
+                geber = (geber % spielerzahl) + 1;
+                break;
+            case INTENT_FLAG_SPIEL_FORTSETZEN:
+                // TODO
+                datum = intent.getStringExtra("datum");
+                Cursor cursor = dbCon.fetchForDate(datum);
+                cursor.moveToLast();
+                spielerzahl = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_SPIELERZAHL));
+                spieler1 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER1));
+                spieler2 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER2));
+                spieler3 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER3));
+                spieler4 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER4));
+                if (spieler4 == null) spieler4 = "";
+                spieler5 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER5));
+                if (spieler5 == null) spieler5 = "";
+                geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
+                geber = (geber % spielerzahl) + 1;
+                pflichtramsch_count = 0;    // Annahme:
+                bockRamschStatus = 0;       // Bock und Ramsch wurde zu Ende gepsielt.
+                break;
+            case INTENT_FLAG_DEFAULT:
+                break;
         }
 
         // Header: Player names + "Spiel"
@@ -120,8 +138,6 @@ public class SkatListActivity extends Activity {
         tvPlayer5.setText(spieler5);
         tvPlayer5.setVisibility((spielerzahl >= 5) ? View.VISIBLE : View.GONE);
 
-        dbCon = new DBController(this);
-        dbCon.open();
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setEmptyView(findViewById(R.id.textViewEmpty));
         // Attach the data from database into ListView using Cursor Adapter
@@ -161,24 +177,6 @@ public class SkatListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
                 String id       = getString(view.findViewById(R.id.tvId));
-                /*
-                String spieler1 = getString(view.findViewById(R.id.tvSpieler1));
-                String spieler2 = getString(view.findViewById(R.id.tvSpieler2));
-                String spieler3 = getString(view.findViewById(R.id.tvSpieler3));
-                String spieler4 = getString(view.findViewById(R.id.tvSpieler4));
-                String spieler5 = getString(view.findViewById(R.id.tvSpieler5));
-                String spiel    = getString(view.findViewById(R.id.tvSpiel));
-
-                Intent modify_intent = new Intent(getApplicationContext(), ModifySkatrundeActivity.class);
-                modify_intent.putExtra("id", id);
-                modify_intent.putExtra("spieler1", spieler1);
-                modify_intent.putExtra("spieler2", spieler2);
-                modify_intent.putExtra("spieler3", spieler3);
-                modify_intent.putExtra("spieler4", spieler4);
-                modify_intent.putExtra("spieler5", spieler5);
-                modify_intent.putExtra("spiel", spiel);
-                startActivity(modify_intent);
-                */
                 Intent intent = new Intent(getApplicationContext(), InspectSkatrundeActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
@@ -222,6 +220,19 @@ public class SkatListActivity extends Activity {
             intent.putExtra("geber",geber);
             intent.putExtra("bock",(bockRamschStatus == 1) ? 1 : 0);
             intent.putExtra("pflichtramsch",(bockRamschStatus == 2) ? 1 : 0);
+
+            /**
+             Log.e("datum:", datum);
+             Log.e("sp1:", spieler1);
+             Log.e("sp2:", spieler2);
+             Log.e("sp3:", spieler3);
+             Log.e("sp4:", spieler4);
+             Log.e("sp5:", spieler5);
+             Log.e("spielerzahl:", "" +spielerzahl);
+             Log.e("geber:", "" +geber);
+             Log.e("bock:", "" +((bockRamschStatus == 1) ? 1 : 0));
+             Log.e("pflichramsch:", "" +((bockRamschStatus == 2) ? 1 : 0));
+             */
 
             Cursor cursor = dbCon.fetchForDate(datum);
             cursor.moveToLast();

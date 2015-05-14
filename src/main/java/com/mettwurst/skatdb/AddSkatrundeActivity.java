@@ -186,19 +186,19 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
             case 4:
                 if (spielerzahl == 4) {
                     res[0] = spieler1;
-                    res[0] = spieler2;
-                    res[0] = spieler3;
+                    res[1] = spieler2;
+                    res[2] = spieler3;
                 } else {
                     // spielerzahl == 5
                     res[0] = spieler5;
-                    res[0] = spieler1;
-                    res[0] = spieler2;
+                    res[1] = spieler1;
+                    res[2] = spieler2;
                 }
                 break;
             case 5:
                 res[0] = spieler1;
-                res[0] = spieler2;
-                res[0] = spieler3;
+                res[1] = spieler2;
+                res[2] = spieler3;
                 break;
         }
 
@@ -681,7 +681,7 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
             Intent main = new Intent(AddSkatrundeActivity.this, SkatListActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             main.putExtra("bockUndRamsch", bockUndRamsch);
             main.putExtra("warRamsch", spiel.equals("Ramsch"));
-            main.putExtra("rundeEingetragen", true);
+            main.putExtra("intentFlag", SkatListActivity.INTENT_FLAG_RUNDE_EINGETRAGEN);
             startActivity(main);
         }
 

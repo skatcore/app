@@ -116,7 +116,7 @@ public class NeuesSpielActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "Spieler eintragen.", Toast.LENGTH_SHORT).show();
             } else {
                 Intent intent = new Intent(getApplicationContext(), SkatListActivity.class);
-                intent.putExtra("neuesSpiel", true);
+                intent.putExtra("intentFlag", SkatListActivity.INTENT_FLAG_NEUES_SPIEL);
                 intent.putExtra("datum", datum);
                 intent.putExtra("spieler1", spieler1);
                 intent.putExtra("spieler2", spieler2);

@@ -52,8 +52,26 @@ public class MainMenuActivity extends Activity {
     }
 
     public void spielFortsetzen(View view) {
-        // TODO
-        Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_SHORT).show();
+        String datum = null;
+        boolean noGame = false;
+        try {
+            DBController dbCon = new DBController(this);
+            dbCon.open();
+            final Cursor cursor = dbCon.fetch();
+            cursor.moveToLast();
+            datum = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_DATUM));
+            dbCon.close();
+        } catch (Exception e) {
+            noGame = true;
+        }
+        if (noGame || datum == null) {
+            Toast.makeText(getApplicationContext(), "Kein Spiel gefunden. Neues Spiel starten.", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), SkatListActivity.class);
+            intent.putExtra("intentFlag", SkatListActivity.INTENT_FLAG_SPIEL_FORTSETZEN);
+            intent.putExtra("datum", datum);
+            startActivity(intent);
+        }
     }
 
     public void spielLaden(View view) {
