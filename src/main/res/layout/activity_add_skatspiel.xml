@@ -52,18 +52,19 @@
         android:paddingTop="20sp"
         android:enabled="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvSpielAuswertung"
-        android:paddingTop="20sp" />
-
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cbSchwarzGespielt"
         android:id="@+id/cbSchwarzGespielt"
         android:visibility="visible"
-        android:enabled="false" />
+        android:enabled="true"
+        android:checked="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSpielAuswertung"
+        android:paddingTop="20sp" />
 
 </LinearLayout>

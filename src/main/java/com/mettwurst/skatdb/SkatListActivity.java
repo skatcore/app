@@ -101,7 +101,7 @@ public class SkatListActivity extends Activity {
                 geber = (geber % spielerzahl) + 1;
                 break;
             case INTENT_FLAG_SPIEL_FORTSETZEN:
-                // TODO
+                // TODO: Bock und Ramsch Status aus DB laden
                 datum = intent.getStringExtra("datum");
                 Cursor cursor = dbCon.fetchForDate(datum);
                 cursor.moveToLast();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
@@ -14,12 +15,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+// TODO:
+// - Bock und Ramsch Status in DB
+// - Bock Count in DB
+// - Ramsch Count in DB
+
 
 public class AddSkatrundeActivity extends ActivityWithSkatinfo {
 
-    private boolean bockUndRamsch = false;
-
     private DBController dbCon;
+    private CheckBox cbSchwarzGespielt;
+    private int ramschVerliererCount = 1;
 
     private TextWatcher twUpdateAll = new TextWatcher() {
         @Override
@@ -34,6 +40,22 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
 
         @Override
         public void afterTextChanged(Editable s) {
+            if (s != null) {
+                if (readIntOrZero(s.toString()) > 120) {
+                    s.clear();
+                    s.append("120");
+                }
+            }
+
+            if (s != null && !spiel.equals("Ramsch")) {
+                final int value = readIntOrZero(s.toString());
+                if (value != 0 && value != 120) {
+                    cbSchwarzGespielt.setChecked(false);
+                    cbSchwarzGespielt.setEnabled(false);
+                } else {
+                    cbSchwarzGespielt.setEnabled(true);
+                }
+            }
             updateAll();
         }
     };
@@ -41,7 +63,6 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Add Skatspiel");
 
         // Read all collected information delivered via Intent
         Intent intent = getIntent();
@@ -81,6 +102,7 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
         gesamt_sp5 = intent.getIntExtra("gesamt_sp5", 0);
 
         // Show layout depending on played game
+        setTitle((!"".equals(solist) ? solist + ": " : "") +spiel);
         if (spiel.equals("Null")) {
             setContentView(R.layout.activity_add_skatspiel_null);
             updateAll();
@@ -127,6 +149,8 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
             cbPik.setOnCheckedChangeListener(myListener);
             cbHerz.setOnCheckedChangeListener(myListener);
             cbKaro.setOnCheckedChangeListener(myListener);
+            cbSchwarzGespielt = (CheckBox) findViewById(R.id.cbSchwarzGespielt);
+            cbSchwarzGespielt.setOnCheckedChangeListener(myListener);
 
             final EditText edPunkteRe = (EditText) findViewById(R.id.edPunkteRe);
             edPunkteRe.addTextChangedListener(twUpdateAll);
@@ -216,13 +240,15 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
     }
 
     private void updateNormal() {
-        // TODO: Schwarz per CheckBox, da 0 bzw 120 Punkte nicht Schwarz implizieren
+        // TODO
         TextView tv = (TextView) findViewById(R.id.tvSpielAuswertung);
         CheckBox cbKreuz = (CheckBox) findViewById(R.id.cbKreuz);
         CheckBox cbPik = (CheckBox) findViewById(R.id.cbPik);
         CheckBox cbHerz = (CheckBox) findViewById(R.id.cbHerz);
         CheckBox cbKaro = (CheckBox) findViewById(R.id.cbKaro);
         EditText edPunkteRe = (EditText) findViewById(R.id.edPunkteRe);
+
+        schwarz_gespielt = (cbSchwarzGespielt.isChecked() ? 1 : 0);
 
         boolean kreuz, pik, herz, karo;
         kreuz = cbKreuz.isChecked();
@@ -239,7 +265,7 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
                     else buben = "Mit 3";
                 else buben = "Mit 2";
             else buben = "Mit 1";
-        else // Ohne
+        else
             if (!pik)
                 if (!herz)
                     if (!karo)
@@ -265,47 +291,55 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
 
         String s = solist +": " +buben +" Spiel " +multiplikator;
 
-        int punkte_re = readIntOrZero(edPunkteRe);
+        punkte_re = readIntOrZero(edPunkteRe);
 
         if (schwarz_angesagt > 0) {
-            s += " Schwarz angesagt";
-            multiplikator += 4;
-
-            if (punkte_re >= 120) {
-                // Schwarz gespielt
-                schneider_gespielt = 1;
-                schwarz_gespielt = 1;
-                solist_gewonnen = 1;
-                multiplikator += 2;
-            } else {
-                // Solist verloren
-                schneider_gespielt = (punkte_re > 90) ? 1 : 0;
-                schwarz_gespielt = 0;
-                solist_gewonnen = 0;
-                multiplikator *= 2;
-                s += ", VERLOREN";
-            }
-        } else if (ouvert > 0 || schneider_angesagt > 0) {
             if (ouvert > 0) {
                 s += " Ouvert";
-                multiplikator += 3;
+                multiplikator += 4;
             } else {
-                s += " Schneider angesagt";
                 multiplikator += 2;
+                s += " Schwarz " +multiplikator;
+                multiplikator += 1;
+                s += ", angesagt " +multiplikator;
             }
 
-            if (punkte_re > 90) {
-                // Schneider gepspielt
+            if (schwarz_gespielt > 0) {
                 schneider_gespielt = 1;
-                schwarz_gespielt = 0;
                 solist_gewonnen = 1;
-                multiplikator += 1;
+                multiplikator += 2;
             } else {
-                schneider_gespielt = 0;
-                schwarz_gespielt = 0;
+                schneider_gespielt = (punkte_re > 90) ? 1 : 0;
                 solist_gewonnen = 0;
                 multiplikator *= 2;
                 s += ", VERLOREN";
+            }
+        } else if (schneider_angesagt > 0) {
+            multiplikator += 1;
+            s += ", Hand " +multiplikator;
+            multiplikator += 1;
+            s += ", Schneider " +multiplikator;
+            multiplikator += 1;
+            s += ", angesagt " +multiplikator;
+
+            if (punkte_re > 90) {
+                schneider_gespielt = 1;
+                solist_gewonnen = 1;
+                if (schwarz_gespielt > 0) {
+                    schneider_gespielt = 1;
+                    multiplikator += 1;
+                    s += ", schwarz " +multiplikator;
+                }
+            } else {
+                solist_gewonnen = 0;
+                if (schwarz_gespielt > 0) {
+                    schneider_gespielt = 1;
+                    multiplikator += 1;
+                    s += ", Schwarz " +multiplikator;
+                    schneider_gespielt = (punkte_re <= 30) ? 1 : 0;
+                }
+                multiplikator *= 2;
+                s += ", VERLOREN " +multiplikator;
             }
         } else {
             if (handspiel > 0) {
@@ -314,70 +348,58 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
             }
 
             // Normale Auswertung
-            if (punkte_re >= 120) {
-                schneider_gespielt = 1;
-                schwarz_gespielt = 1;
-                s += " Schwarz";
+            if (schwarz_gespielt > 0) {
                 multiplikator += 2;
+                s += " Schwarz " +multiplikator;
             } else if (punkte_re > 90) {
                 schneider_gespielt = 1;
-                schwarz_gespielt = 0;
-                s += " Schneider";
                 multiplikator += 1;
+                s += " Schneider " +multiplikator;
             } else {
                 schneider_gespielt = 0;
-                schwarz_gespielt = 0;
             }
 
             if (punkte_re > 60) {
                 solist_gewonnen = 1;
             } else {
-                if (punkte_re == 60) {
-                    // Spaltarsch
-                    bockUndRamsch = true;
+                if (schwarz_gespielt > 0) {
+                    multiplikator += 2;
+                    s += ", Schwarz " +multiplikator;
+                } else if (punkte_re < 30) {
+                    schneider_gespielt = 1;
+                    multiplikator += 1;
+                    s += ", Schneider " +multiplikator;
                 }
                 solist_gewonnen = 0;
-                multiplikator *= 2;
                 s += ", VERLOREN";
-                if (punkte_re <= 0) {
-                    s += " Schwarz";
-                    multiplikator += 2;
-                    schneider_gespielt = 1;
-                    schwarz_gespielt = 1;
-                } else if (punkte_re < 30) {
-                    s += " Schneider";
-                    multiplikator += 1;
-                    schneider_gespielt = 1;
-                }
+                multiplikator *= 2;
             }
         }
 
         if ((solist_gewonnen > 0) && (multiplikator * grundwert < reizwert)) {
-            s += ", VERLOREN (ÜBERREIZT)";
             solist_gewonnen = 0;
             multiplikator *= 2;
+            s += ", VERLOREN (ÜBERREIZT) " +multiplikator;
         }
-
         if (kontra > 0) {
             multiplikator *= 2;
-            s += " Kontra";
+            s += ", Kontra " +multiplikator;
         }
         if (re > 0) {
             multiplikator *= 2;
-            s += " Re";
+            s += ", Re " +multiplikator;
         }
         if (bock > 0) {
             multiplikator *= 2;
-            s += " Bock";
+            s += ", Bock " +multiplikator;
         }
 
         spielwert = grundwert * multiplikator;
-        s += " " +multiplikator +" " +spiel +" = " +spielwert;
-        tv.setText(s);
+        s += " x "
+                +spiel +" (" +grundwert +")"
+                +" = " +spielwert;
 
-        if (kontra > 0 && solist_gewonnen == 0) {
-            bockUndRamsch = true;
-        }
+        tv.setText(s);
         distributePointsToLosers();
     }
 
@@ -503,11 +525,11 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
             spielwert *= 2;
         }
 
-        int verliererCount = 0;
+        ramschVerliererCount = 0;
         for (int i = 0; i < 3; i++) {
             if (ramschPunkte[i] == max) {
                 // Spieler hat verloren
-                verliererCount++;
+                ramschVerliererCount++;
 
                 if (players[i].equals(spieler1)) {
                     punkte_sp1 = spielwert;
@@ -533,9 +555,6 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
         }
 
         tv.setText(s);
-        if (verliererCount >= 2) {
-            bockUndRamsch = true;
-        }
     }
 
     // Setzt alle Felder und macht ein Update der Textausgabe
@@ -568,7 +587,7 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
 
         if (kontra > 0) {
             spielwert *= 2;
-            s += " Kontra";
+            s += ", Kontra";
         }
         if (re > 0) {
             spielwert *=2;
@@ -576,7 +595,7 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
         }
         if (bock > 0) {
             spielwert *= 2;
-            s += " Bock";
+            s += ", Bock";
         }
         if (solist_gewonnen > 0) {
             spielwert = grundwert;
@@ -585,12 +604,8 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
             s += ", VERLOREN";
         }
 
-        s += " = " +((solist_gewonnen > 0) ? "" : "-") +spielwert;
+        s += " = " +spielwert;
         tv.setText(s);
-
-        if (kontra > 0 && solist_gewonnen == 0) {
-            bockUndRamsch = true;
-        }
         distributePointsToLosers();
     }
 
@@ -678,6 +693,19 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
 
             dbCon.insert(this); // DBController reads the public fields from this instance
 
+            boolean bockUndRamsch = false;
+            final int spielwertRaw = spielwert /
+                    ((solist_gewonnen == 0) ? 2 : 1) /
+                    (kontra > 0 ? 2 : 1) /
+                    (re > 0 ? 2 : 1) /
+                    (bock > 0 ? 2 : 1);
+            if ((schneider_angesagt == 0 && punkte_re == 60) ||
+                    (spielwertRaw >= 100) ||
+                    (kontra > 0 && solist_gewonnen == 0) ||
+                    (spiel.equals("Ramsch") && ramschVerliererCount > 1) ) {
+                bockUndRamsch = true;
+            }
+
             Intent main = new Intent(AddSkatrundeActivity.this, SkatListActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             main.putExtra("bockUndRamsch", bockUndRamsch);
             main.putExtra("warRamsch", spiel.equals("Ramsch"));
@@ -689,9 +717,13 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
     }
 
     private int readIntOrZero(EditText ed) {
+        return readIntOrZero(ed.getText().toString());
+    }
+
+    private int readIntOrZero(String s) {
         int res = 0;
         try {
-            res = Integer.valueOf(ed.getText().toString());
+            res = Integer.valueOf(s);
         } catch (Exception e) {
             // Do nothing
         }

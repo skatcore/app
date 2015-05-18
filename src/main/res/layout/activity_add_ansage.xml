@@ -143,47 +143,42 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llSonstigeAnsagen">
+        android:id="@+id/llSchneiderSchwarz">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cbSchneiderAngesagt"
+            android:id="@+id/cbSchneiderAngesagt" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cbSchneiderAngesagt"
-                android:id="@+id/cbSchneiderAngesagt" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cbSchwarzAngesagt"
+            android:id="@+id/cbSchwarzAngesagt" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cbSchwarzAngesagt"
-                android:id="@+id/cbSchwarzAngesagt" />
+    </LinearLayout>
 
-        </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llKontraRe">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cbKontra"
+            android:id="@+id/cbKontra" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cbKontra"
-                android:id="@+id/cbKontra" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cbRe"
-                android:id="@+id/cbRe" />
-        </LinearLayout>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cbRe"
+            android:id="@+id/cbRe" />
     </LinearLayout>
 
     <LinearLayout

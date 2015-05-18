@@ -70,9 +70,10 @@ public class AddAnsageActivity extends Activity{
     private LinearLayout llHandOuvertAnsagen;
         private CheckBox cbHandspiel;
         private CheckBox cbOuvert;
-    private LinearLayout llSonstigeAnsagen;
+    private LinearLayout llSchneiderSchwarz;
         private CheckBox cbSchneiderAngesagt;
         private CheckBox cbSchwarzAngesagt;
+    private LinearLayout llKontraRe;
         private CheckBox cbKontra;
         private CheckBox cbRe;
     private LinearLayout llJungfrauAnsagen;
@@ -137,7 +138,8 @@ public class AddAnsageActivity extends Activity{
         tvAufspiel          = (TextView) findViewById(R.id.tvAufspiel);
         llSolist            = (LinearLayout) findViewById(R.id.llSolist);
         llHandOuvertAnsagen = (LinearLayout) findViewById(R.id.llHandOuvertAnsagen);
-        llSonstigeAnsagen   = (LinearLayout) findViewById(R.id.llSonstigeAnsagen);
+        llSchneiderSchwarz  = (LinearLayout) findViewById(R.id.llSchneiderSchwarz);
+        llKontraRe          = (LinearLayout) findViewById(R.id.llKontraRe);
         llJungfrauAnsagen   = (LinearLayout) findViewById(R.id.llJungfrauAnsagen);
         llReizwert          = (LinearLayout) findViewById(R.id.llReizwert);
         cbJungfrauAnsage1   = (CheckBox) findViewById(R.id.cbJungfrauAnsage1);
@@ -297,7 +299,8 @@ public class AddAnsageActivity extends Activity{
         rbKaro.setVisibility(View.GONE);
         cbOuvert.setVisibility(View.GONE);
 
-        llSonstigeAnsagen.setVisibility(View.GONE);
+        llSchneiderSchwarz.setVisibility(View.GONE);
+        llKontraRe.setVisibility(View.GONE);
         llJungfrauAnsagen.setVisibility(View.VISIBLE);
         llReizwert.setVisibility(View.GONE);
     }
@@ -306,7 +309,12 @@ public class AddAnsageActivity extends Activity{
         llSolist.setVisibility(View.VISIBLE);
         llHandOuvertAnsagen.setVisibility(View.VISIBLE);
         if (!pflichtramsch) {
-            llSonstigeAnsagen.setVisibility(View.VISIBLE);
+            if (rbNull.isChecked()) {
+                llSchneiderSchwarz.setVisibility(View.GONE);
+            } else {
+                llSchneiderSchwarz.setVisibility(View.VISIBLE);
+            }
+            llKontraRe.setVisibility(View.VISIBLE);
             llReizwert.setVisibility(View.VISIBLE);
         }
         llJungfrauAnsagen.setVisibility(View.GONE);
@@ -370,7 +378,8 @@ public class AddAnsageActivity extends Activity{
         setTitle(spiel);
         llSolist.setVisibility(View.GONE);
         llHandOuvertAnsagen.setVisibility(View.GONE);
-        llSonstigeAnsagen.setVisibility(View.GONE);
+        llSchneiderSchwarz.setVisibility(View.GONE);
+        llKontraRe.setVisibility(View.GONE);
         tvAnsagen.setText("Jungfrau angesagt");
         llJungfrauAnsagen.setVisibility(View.VISIBLE);
         cbJungfrauAnsage1.setText(playingPlayersInOrder[0]);
