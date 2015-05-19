@@ -99,6 +99,9 @@ public class Task implements Runnable {
                 sheet.addCell(new Label(36, 0, DBContract.Entry.COL_JUNGFRAU_ANGESAGT4));
                 sheet.addCell(new Label(37, 0, DBContract.Entry.COL_JUNGFRAU_ANGESAGT5));
                 sheet.addCell(new Label(38, 0, DBContract.Entry.COL_SPIELWERT));
+                sheet.addCell(new Label(39, 0, DBContract.Entry.COL_BOCK_RAMSCH_STATUS));
+                sheet.addCell(new Label(40, 0, DBContract.Entry.COL_BOCK_COUNT));
+                sheet.addCell(new Label(41, 0, DBContract.Entry.COL_RAMSCH_COUNT));
 
                 if (cursor.moveToFirst()) {
                     do {
@@ -143,6 +146,9 @@ public class Task implements Runnable {
                         sheet.addCell(new Label(36, i, cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_JUNGFRAU_ANGESAGT4))));
                         sheet.addCell(new Label(37, i, cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_JUNGFRAU_ANGESAGT5))));
                         sheet.addCell(new Label(38, i, cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELWERT))));
+                        sheet.addCell(new Label(39, i, cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_RAMSCH_STATUS))));
+                        sheet.addCell(new Label(40, i, cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT))));
+                        sheet.addCell(new Label(41, i, cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_RAMSCH_COUNT))));
                     } while (cursor.moveToNext());
                 }
                 cursor.close();

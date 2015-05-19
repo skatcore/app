@@ -54,14 +54,17 @@ public class DBHelper extends SQLiteOpenHelper {
                     Entry.COL_JUNGFRAU_ANGESAGT3    	+BOOL_TYPE 					+COMMA_SEP +
                     Entry.COL_JUNGFRAU_ANGESAGT4    	+BOOL_TYPE 					+COMMA_SEP +
                     Entry.COL_JUNGFRAU_ANGESAGT5    	+BOOL_TYPE 					+COMMA_SEP +
-                    Entry.COL_SPIELWERT         	    +INT_TYPE +
+                    Entry.COL_SPIELWERT         	    +INT_TYPE                   +COMMA_SEP +
+                    Entry.COL_BOCK_RAMSCH_STATUS	    +INT_TYPE                   +COMMA_SEP +
+                    Entry.COL_BOCK_COUNT	            +INT_TYPE                   +COMMA_SEP +
+                    Entry.COL_RAMSCH_COUNT              +INT_TYPE +
                     " )";
 	
 	private static final String SQL_DELETE_ENTRIES =
 		    "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;
 
-	public static final int DATABASE_VERSION = 4;
-	public static String DATABASE_NAME = "skat005.db";
+	public static final int DATABASE_VERSION = 6;
+	public static String DATABASE_NAME = "skat006.db";
 
 	
 	public DBHelper (Context context) {

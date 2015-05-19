@@ -51,5 +51,8 @@ public final class DBContract {
         public static final String COL_JUNGFRAU_ANGESAGT4   = "JungfrauAngesagt4";
         public static final String COL_JUNGFRAU_ANGESAGT5   = "JungfrauAngesagt5";
         public static final String COL_SPIELWERT            = "SpielwertGesamt";
+        public static final String COL_BOCK_RAMSCH_STATUS   = "BockRamschStatus";
+        public static final String COL_BOCK_COUNT           = "BockCount";
+        public static final String COL_RAMSCH_COUNT         = "RamschCount";
 	}
 }

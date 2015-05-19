@@ -48,4 +48,8 @@ public abstract class ActivityWithSkatinfo extends Activity {
     public int gesamt_sp4;
     public int gesamt_sp5;
     public int spielwert;
+
+    public int bockRamschStatus = 0; // 0: Normal, 1: Bock, 2: Ramsch
+    public int bockCount = 0;
+    public int ramschCount = 0;
 }

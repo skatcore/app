@@ -119,6 +119,9 @@ public class DBController {
         values.put(Entry.COL_JUNGFRAU_ANGESAGT4, a.jungfrau_angesagt4);
         values.put(Entry.COL_JUNGFRAU_ANGESAGT5, a.jungfrau_angesagt5);
         values.put(Entry.COL_SPIELWERT, a.spielwert);
+        values.put(Entry.COL_BOCK_RAMSCH_STATUS, a.bockRamschStatus);
+        values.put(Entry.COL_BOCK_COUNT, a.bockCount);
+        values.put(Entry.COL_RAMSCH_COUNT, a.ramschCount);
 
         if (_id == -1) {
             return database.insert(Entry.TABLE_NAME, Entry.NULL_COLUMN_HACK, values);
