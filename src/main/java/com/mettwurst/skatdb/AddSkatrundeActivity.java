@@ -349,12 +349,13 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
 
             // Normale Auswertung
             if (schwarz_gespielt > 0) {
+                schneider_gespielt = 1;
                 multiplikator += 2;
-                s += " Schwarz " +multiplikator;
-            } else if (punkte_re > 90) {
+                s += ", Schwarz " +multiplikator;
+            } else if ( (punkte_re > 90) || (punkte_re <= 30) ) {
                 schneider_gespielt = 1;
                 multiplikator += 1;
-                s += " Schneider " +multiplikator;
+                s += ", Schneider " +multiplikator;
             } else {
                 schneider_gespielt = 0;
             }
@@ -362,17 +363,9 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
             if (punkte_re > 60) {
                 solist_gewonnen = 1;
             } else {
-                if (schwarz_gespielt > 0) {
-                    multiplikator += 2;
-                    s += ", Schwarz " +multiplikator;
-                } else if (punkte_re < 30) {
-                    schneider_gespielt = 1;
-                    multiplikator += 1;
-                    s += ", Schneider " +multiplikator;
-                }
                 solist_gewonnen = 0;
-                s += ", VERLOREN";
                 multiplikator *= 2;
+                s += ", VERLOREN " +multiplikator;
             }
         }
 

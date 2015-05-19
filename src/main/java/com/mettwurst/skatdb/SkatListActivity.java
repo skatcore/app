@@ -1,10 +1,8 @@
 package com.mettwurst.skatdb;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,16 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /** TODO
-    - bockUndRamsch-Feedback lesen und anwenden.
     - Runden löschen (dabei Gesamtpunkte beachten!).
     - Runden bearbeiten (-----"-----).
-
-    Bugs
-    - Wenn man ein Spiel laedt, wird nicht erkannt, ob Pflichtramsch war.
  */
 
 
-public class SkatListActivity extends Activity {
+public class SkatListActivity extends ActivityWithSkatinfo {
     private static String datum;
     private static String spieler1;
     private static String spieler2;
@@ -42,9 +36,9 @@ public class SkatListActivity extends Activity {
 
     private DBController dbCon;
 
-    private static int bock_count = 0;
-    private static int pflichtramsch_count = 0;
-    private int bockRamschStatus = 0; // 0: Normal, 1: Bock, 2: Ramsch
+    private static int bockRamschStatus; // 0: Normal, 1: Bock, 2: Ramsch
+    private static int bockCount;
+    private static int ramschCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +61,9 @@ public class SkatListActivity extends Activity {
                 spieler5 = intent.getStringExtra("spieler5");
                 spielerzahl = intent.getIntExtra("spielerzahl", -1);
                 geber = 1;
-                pflichtramsch_count = 0;
                 bockRamschStatus = 0;
+                bockCount = 0;
+                ramschCount = 0;
                 break;
             case INTENT_FLAG_RUNDE_EINGETRAGEN:
                 boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
@@ -76,22 +71,22 @@ public class SkatListActivity extends Activity {
                 switch (bockRamschStatus) {
                     case 0:
                         if (bockUndRamsch) {
-                            bock_count += spielerzahl;
-                            pflichtramsch_count += spielerzahl;
+                            bockCount += spielerzahl;
+                            ramschCount += spielerzahl;
                             bockRamschStatus = 1;
                         }
                         break;
                     case 1:
-                        bock_count -= 1;
-                        if (bock_count % spielerzahl == 0) {
+                        bockCount -= 1;
+                        if (bockCount % spielerzahl == 0) {
                             bockRamschStatus = 2;
                         }
                         break;
                     case 2:
                         if (warRamsch) {
                             // Bei Grand Hand nicht reduzieren
-                            pflichtramsch_count -= 1;
-                            if (pflichtramsch_count % spielerzahl == 0) {
+                            ramschCount -= 1;
+                            if (ramschCount % spielerzahl == 0) {
                                 bockRamschStatus = 0;
                             }
                         }
@@ -101,7 +96,6 @@ public class SkatListActivity extends Activity {
                 geber = (geber % spielerzahl) + 1;
                 break;
             case INTENT_FLAG_SPIEL_FORTSETZEN:
-                // TODO: Bock und Ramsch Status aus DB laden
                 datum = intent.getStringExtra("datum");
                 Cursor cursor = dbCon.fetchForDate(datum);
                 cursor.moveToLast();
@@ -115,8 +109,9 @@ public class SkatListActivity extends Activity {
                 if (spieler5 == null) spieler5 = "";
                 geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
                 geber = (geber % spielerzahl) + 1;
-                pflichtramsch_count = 0;    // Annahme:
-                bockRamschStatus = 0;       // Bock und Ramsch wurde zu Ende gepsielt.
+                bockRamschStatus = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_RAMSCH_STATUS));
+                bockCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT));
+                ramschCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_RAMSCH_COUNT));
                 break;
             case INTENT_FLAG_DEFAULT:
                 break;
