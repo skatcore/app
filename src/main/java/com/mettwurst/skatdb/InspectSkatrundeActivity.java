@@ -49,6 +49,8 @@ public class InspectSkatrundeActivity extends ActivityWithSkatinfo {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspect_skatrunde);
 
+        setTitle("Inspect");
+
         Intent intent = getIntent();
         final String id = intent.getStringExtra("id");
         _id = Long.valueOf(id);
@@ -219,6 +221,9 @@ public class InspectSkatrundeActivity extends ActivityWithSkatinfo {
         if (id == R.id.menuSaveUpdate) {
             updateFieldsFromArrayList();
             dbCon.update(_id, this);
+
+            // TODO Gesammtpunkte aendern
+
             Intent main = new Intent(InspectSkatrundeActivity.this, SkatListActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(main);
         }

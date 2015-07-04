@@ -1,5 +1,7 @@
 package com.mettwurst.skatdb;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,8 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /** TODO
-    - Runden löschen (dabei Gesamtpunkte beachten!).
     - Runden bearbeiten (-----"-----).
+    - Spiel laden. (Neue Tabelle mit Spielen?)
  */
 
 
@@ -35,6 +37,7 @@ public class SkatListActivity extends ActivityWithSkatinfo {
     public static final int INTENT_FLAG_SPIEL_FORTSETZEN    = 3;
 
     private DBController dbCon;
+    private ListView listView;
 
     private static int bockRamschStatus; // 0: Normal, 1: Bock, 2: Ramsch
     private static int bockCount;
@@ -133,39 +136,10 @@ public class SkatListActivity extends ActivityWithSkatinfo {
         tvPlayer5.setText(spieler5);
         tvPlayer5.setVisibility((spielerzahl >= 5) ? View.VISIBLE : View.GONE);
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.listView);
         listView.setEmptyView(findViewById(R.id.textViewEmpty));
-        // Attach the data from database into ListView using Cursor Adapter
-        Cursor cursor = dbCon.fetchForDate(datum); // Filtering for current date (game)
-        String[] from = new String[]{
-                DBContract.Entry._ID,
-                DBContract.Entry.COL_GESAMT_SP1,
-                DBContract.Entry.COL_GESAMT_SP2,
-                DBContract.Entry.COL_GESAMT_SP3,
-                DBContract.Entry.COL_GESAMT_SP4,
-                DBContract.Entry.COL_GESAMT_SP5,
-                DBContract.Entry.COL_SPIELWERT};
 
-        int[] into = new int[]{
-                R.id.tvId,
-                R.id.tvSpieler1,
-                R.id.tvSpieler2,
-                R.id.tvSpieler3,
-                R.id.tvSpieler4,
-                R.id.tvSpieler5,
-                R.id.tvSpiel};
-
-        int layoutId;
-        if (spielerzahl >= 5) {
-            layoutId = R.layout.activity_view_record_5;
-        } else if (spielerzahl >= 4) {
-            layoutId = R.layout.activity_view_record_4;
-        } else {
-            layoutId = R.layout.activity_view_record_3;
-        }
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, layoutId, cursor, from, into, 0);
-        adapter.notifyDataSetChanged();
-        listView.setAdapter(adapter);
+        updateListViewAndAdapter();
 
         // OnCLickListener For List Items
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -216,19 +190,6 @@ public class SkatListActivity extends ActivityWithSkatinfo {
             intent.putExtra("bock",(bockRamschStatus == 1) ? 1 : 0);
             intent.putExtra("pflichtramsch",(bockRamschStatus == 2) ? 1 : 0);
 
-            /**
-             Log.e("datum:", datum);
-             Log.e("sp1:", spieler1);
-             Log.e("sp2:", spieler2);
-             Log.e("sp3:", spieler3);
-             Log.e("sp4:", spieler4);
-             Log.e("sp5:", spieler5);
-             Log.e("spielerzahl:", "" +spielerzahl);
-             Log.e("geber:", "" +geber);
-             Log.e("bock:", "" +((bockRamschStatus == 1) ? 1 : 0));
-             Log.e("pflichramsch:", "" +((bockRamschStatus == 2) ? 1 : 0));
-             */
-
             Cursor cursor = dbCon.fetchForDate(datum);
             cursor.moveToLast();
             int gesamt_sp1 = readIntOrZero(cursor, DBContract.Entry.COL_GESAMT_SP1);
@@ -244,23 +205,71 @@ public class SkatListActivity extends ActivityWithSkatinfo {
             intent.putExtra("gesamt_sp5", gesamt_sp5);
 
             startActivity(intent);
-        } else if(id == R.id.menuExport) {
+        } else if (id == R.id.menuDeleteLastRound) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder
+                    .setTitle("Delete Last Game")
+                    .setMessage("Are you sure?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Yes pressed
+                            dbCon.deleteLastGameForDate(datum);
+                            updateListViewAndAdapter();
+                        }
+                    })
+                    .setNegativeButton("No", null) //Do nothing on no
+                    .show();
+        } else if (id == R.id.menuExport) {
             final Cursor cursor = dbCon.fetchForDate(datum);
             new Thread(new Task(cursor, datum)).start();
             Toast.makeText(getApplicationContext(), "Excel-Datei auf SD-Karte erstellt.", Toast.LENGTH_SHORT).show();
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+    return super.onOptionsItemSelected(item);
+            }
 
     private int readIntOrZero(Cursor cursor, String column) {
-        int res = 0;
-        try {
-            res = Integer.valueOf(cursor.getString(cursor.getColumnIndex(column)));
-        } catch (Exception e) {
-            // Do nothing, res stays 0
+            int res = 0;
+            try {
+                res = Integer.valueOf(cursor.getString(cursor.getColumnIndex(column)));
+            } catch (Exception e) {
+                // Do nothing, res stays 0
+            }
+            return res;
+    }
+
+    // Attaches the data from database into ListView using Cursor Adapter
+    private void updateListViewAndAdapter() {
+        Cursor cursor = dbCon.fetchForDate(datum); // Filtering for current date (game)
+        String[] from = new String[]{
+                DBContract.Entry._ID,
+                DBContract.Entry.COL_GESAMT_SP1,
+                DBContract.Entry.COL_GESAMT_SP2,
+                DBContract.Entry.COL_GESAMT_SP3,
+                DBContract.Entry.COL_GESAMT_SP4,
+                DBContract.Entry.COL_GESAMT_SP5,
+                DBContract.Entry.COL_SPIELWERT};
+
+        int[] into = new int[]{
+                R.id.tvId,
+                R.id.tvSpieler1,
+                R.id.tvSpieler2,
+                R.id.tvSpieler3,
+                R.id.tvSpieler4,
+                R.id.tvSpieler5,
+                R.id.tvSpiel};
+
+        int layoutId;
+        if (spielerzahl >= 5) {
+            layoutId = R.layout.activity_view_record_5;
+        } else if (spielerzahl >= 4) {
+            layoutId = R.layout.activity_view_record_4;
+        } else {
+            layoutId = R.layout.activity_view_record_3;
         }
-        return res;
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(SkatListActivity.this, layoutId, cursor, from, into, 0);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
     }
 }
-// TODO: this is just a test. (Github)

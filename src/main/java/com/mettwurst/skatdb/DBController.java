@@ -73,6 +73,15 @@ public class DBController {
 				);
 	}
 
+    public void deleteLastGameForDate(String date) {
+        Cursor c = fetchForDate(date);
+        if (c != null) {
+            c.moveToLast();
+            int id = Integer.valueOf(c.getString(c.getColumnIndex(Entry._ID)));
+            delete(id);
+        }
+    }
+
     public void clearTable() {
         database.delete(Entry.TABLE_NAME, null, null);
     }

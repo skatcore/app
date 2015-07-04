@@ -53,5 +53,7 @@
     <string name="editSkatrunde">Bearbeiten</string>
     <string name="tvISolist">Solist:</string>
     <string name="menuSaveUpdate">Save</string>
+    <string name="menuDeleteRound">Delete</string>
+    <string name="menuDeleteLastRound">Delete Last Round</string>
 
 </resources>
