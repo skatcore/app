@@ -37,11 +37,16 @@ public class SkatListActivity extends ActivityWithSkatinfo {
     public static final int INTENT_FLAG_SPIEL_FORTSETZEN    = 3;
 
     private DBController dbCon;
+    private DBSpielController dbSpielCon;
     private ListView listView;
 
     private static int bockRamschStatus; // 0: Normal, 1: Bock, 2: Ramsch
     private static int bockCount;
     private static int ramschCount;
+
+    private static int oldBockRamschStatus = 0;
+    private static int oldBockCount = 0;
+    private static int oldRamschCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,9 @@ public class SkatListActivity extends ActivityWithSkatinfo {
         int intentFlag = intent.getIntExtra("intentFlag", INTENT_FLAG_DEFAULT);
         switch (intentFlag) {
             case INTENT_FLAG_NEUES_SPIEL:
+                dbSpielCon = new DBSpielController(this);
+                dbSpielCon.open();
+
                 datum = intent.getStringExtra("datum");
                 spieler1 = intent.getStringExtra("spieler1");
                 spieler2 = intent.getStringExtra("spieler2");
@@ -67,8 +75,14 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                 bockRamschStatus = 0;
                 bockCount = 0;
                 ramschCount = 0;
+
+                dbSpielCon.insert(datum, new String[]{spieler1, spieler2, spieler3, spieler4, spieler5});
                 break;
             case INTENT_FLAG_RUNDE_EINGETRAGEN:
+                oldBockCount = bockCount; // Backup for last round deletion
+                oldBockRamschStatus = bockRamschStatus;
+                oldRamschCount = ramschCount;
+
                 boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
                 boolean warRamsch = intent.getBooleanExtra("warRamsch", false);
                 switch (bockRamschStatus) {
@@ -216,6 +230,13 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                             // Yes pressed
                             dbCon.deleteLastGameForDate(datum);
                             updateListViewAndAdapter();
+                            geber -= 1;
+                            if (geber <= 0) {
+                                geber = spielerzahl;
+                            }
+                            ramschCount = oldRamschCount; // Restore backup
+                            bockRamschStatus = oldBockRamschStatus;
+                            bockCount = oldBockCount;
                         }
                     })
                     .setNegativeButton("No", null) //Do nothing on no

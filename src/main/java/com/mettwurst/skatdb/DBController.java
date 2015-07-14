@@ -1,6 +1,5 @@
 package com.mettwurst.skatdb;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -80,10 +79,6 @@ public class DBController {
             int id = Integer.valueOf(c.getString(c.getColumnIndex(Entry._ID)));
             delete(id);
         }
-    }
-
-    public void clearTable() {
-        database.delete(Entry.TABLE_NAME, null, null);
     }
 
     private long insertOrUpdate(long _id, ActivityWithSkatinfo a) {
