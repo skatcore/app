@@ -41,14 +41,6 @@
                 android:value="com.mettwurst.skatdb.SkatListActivity" />
         </activity>
         <activity
-            android:name=".ModifySkatrundeActivity"
-            android:label="@string/title_activity_modify_skatspiel"
-            android:parentActivityName=".SkatListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mettwurst.skatdb.SkatListActivity" />
-        </activity>
-        <activity
             android:name=".AddAnsageActivity"
             android:label="@string/title_activity_add_ansage"
             android:parentActivityName=".SkatListActivity" >

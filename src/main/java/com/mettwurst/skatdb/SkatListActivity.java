@@ -222,10 +222,10 @@ public class SkatListActivity extends ActivityWithSkatinfo {
         } else if (id == R.id.menuDeleteLastRound) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder
-                    .setTitle("Delete Last Game")
-                    .setMessage("Are you sure?")
+                    .setTitle("Löschen")
+                    .setMessage("Letzte Runde löschen?")
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Yes pressed
                             dbCon.deleteLastGameForDate(datum);
@@ -239,7 +239,7 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                             bockCount = oldBockCount;
                         }
                     })
-                    .setNegativeButton("No", null) //Do nothing on no
+                    .setNegativeButton("Nein", null) //Do nothing on no
                     .show();
         } else if (id == R.id.menuExport) {
             final Cursor cursor = dbCon.fetchForDate(datum);
