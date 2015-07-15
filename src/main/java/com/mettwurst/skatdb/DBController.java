@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.mettwurst.skatdb.DBContract.Entry;
 
@@ -137,5 +138,30 @@ public class DBController {
                     null						// whereArgs
             );
         }
+    }
+
+    public int getTotalGamesCount() {
+        Cursor c = fetch();
+        if (c != null && c.getCount() >= 1) {
+            return c.getCount();
+        } else {
+            return 0;
+        }
+    }
+
+    public String getMostValuableRound() {
+        String s = "";
+        Cursor c = database.rawQuery("SELECT * FROM " +Entry.TABLE_NAME +
+                " WHERE " +Entry.COL_SOLIST_GEWONNEN +" = 1 ORDER BY " +Entry.COL_SPIELWERT +" DESC", null);
+        if (c != null && c.getCount() >= 1) {
+            c.moveToFirst();
+            s += String.valueOf(c.getInt(c.getColumnIndex(DBContract.Entry.COL_SPIELWERT)));
+            s += " Punkte (";
+            s += c.getString(c.getColumnIndex(DBContract.Entry.COL_SOLIST));
+            s += ")";
+        } else {
+            s = "-";
+        }
+        return s;
     }
 }

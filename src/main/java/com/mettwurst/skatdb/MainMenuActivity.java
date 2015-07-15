@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -17,6 +18,8 @@ public class MainMenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        calculateStats();
     }
 
 
@@ -68,5 +71,17 @@ public class MainMenuActivity extends Activity {
     public void spielLaden(View view) {
         Intent intent = new Intent(getApplicationContext(), LoadGameActivity.class);
         startActivity(intent);
+    }
+
+    private void calculateStats() {
+        DBController dbCon = new DBController(this);
+        dbCon.open();
+        TextView tvStats = (TextView) findViewById(R.id.tvStats);
+
+        String totalRounds =  "" +dbCon.getTotalGamesCount();
+        tvStats.append("\n");
+        tvStats.append("\nGespielte Runden: " +totalRounds);
+        String mostValuableRound = dbCon.getMostValuableRound();
+        tvStats.append("\nBeste Runde: " +mostValuableRound);
     }
 }
