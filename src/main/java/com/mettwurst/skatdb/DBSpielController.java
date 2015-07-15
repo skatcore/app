@@ -32,13 +32,13 @@ public class DBSpielController {
         ContentValues values = new ContentValues();
         values.put(Entry.COL_DATUM, date);
         String s = spieler[0]
-                +"," +spieler[1]
-                +"," +spieler[2];
+                +", " +spieler[1]
+                +", " +spieler[2];
         if (spieler.length >= 4 && spieler[3] != null && !spieler[3].equals("")) {
-            s += "," +spieler[3];
+            s += ", " +spieler[3];
         }
         if (spieler.length >= 5 && spieler[4] != null && !spieler[4].equals("")) {
-            s += "," +spieler[4];
+            s += ", " +spieler[4];
         }
         
         values.put(Entry.COL_SPIELER, s);
@@ -65,7 +65,7 @@ public class DBSpielController {
         database.delete(
                 Entry.TABLE_NAME,
                 Entry.COL_DATUM +" = " +date,  	// whereClause
-                null						// whereArgs
+                null						    // whereArgs
         );
     }
 }
