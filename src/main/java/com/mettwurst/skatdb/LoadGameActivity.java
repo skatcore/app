@@ -52,9 +52,12 @@ public class LoadGameActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
                 String datum       = getString(view.findViewById(R.id.tvSpielDatum));
+                String spieler     = getString(view.findViewById(R.id.tvSpieler));
                 Intent intent = new Intent(getApplicationContext(), SkatListActivity.class);
                 intent.putExtra("intentFlag", SkatListActivity.INTENT_FLAG_SPIEL_FORTSETZEN);
                 intent.putExtra("datum", datum);
+                intent.putExtra("spieler", spieler);
+
                 if (!datum.equals("")) {
                     startActivity(intent);
                 }

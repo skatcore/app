@@ -3,8 +3,10 @@ package com.mettwurst.skatdb;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +16,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-/** TODO
-    - Runden bearbeiten (-----"-----).
-    - Spiel laden. (Neue Tabelle mit Spielen?)
- */
-
 
 public class SkatListActivity extends ActivityWithSkatinfo {
     private static String datum;
@@ -37,7 +33,6 @@ public class SkatListActivity extends ActivityWithSkatinfo {
     public static final int INTENT_FLAG_SPIEL_FORTSETZEN    = 3;
 
     private DBController dbCon;
-    private DBSpielController dbSpielCon;
     private ListView listView;
 
     private static int bockRamschStatus; // 0: Normal, 1: Bock, 2: Ramsch
@@ -61,9 +56,6 @@ public class SkatListActivity extends ActivityWithSkatinfo {
         int intentFlag = intent.getIntExtra("intentFlag", INTENT_FLAG_DEFAULT);
         switch (intentFlag) {
             case INTENT_FLAG_NEUES_SPIEL:
-                dbSpielCon = new DBSpielController(this);
-                dbSpielCon.open();
-
                 datum = intent.getStringExtra("datum");
                 spieler1 = intent.getStringExtra("spieler1");
                 spieler2 = intent.getStringExtra("spieler2");
@@ -76,7 +68,11 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                 bockCount = 0;
                 ramschCount = 0;
 
+                DBSpielController dbSpielCon = new DBSpielController(this);
+                dbSpielCon.open();
                 dbSpielCon.insert(datum, new String[]{spieler1, spieler2, spieler3, spieler4, spieler5});
+                dbSpielCon.close();
+                setLastPlayedRound(datum);
                 break;
             case INTENT_FLAG_RUNDE_EINGETRAGEN:
                 oldBockCount = bockCount; // Backup for last round deletion
@@ -114,21 +110,53 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                 break;
             case INTENT_FLAG_SPIEL_FORTSETZEN:
                 datum = intent.getStringExtra("datum");
-                Cursor cursor = dbCon.fetchForDate(datum);
-                cursor.moveToLast();
-                spielerzahl = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_SPIELERZAHL));
-                spieler1 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER1));
-                spieler2 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER2));
-                spieler3 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER3));
-                spieler4 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER4));
-                if (spieler4 == null) spieler4 = "";
-                spieler5 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER5));
-                if (spieler5 == null) spieler5 = "";
-                geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
-                geber = (geber % spielerzahl) + 1;
-                bockRamschStatus = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_RAMSCH_STATUS));
-                bockCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT));
-                ramschCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_RAMSCH_COUNT));
+                try {
+                    Cursor cursor = dbCon.fetchForDate(datum);
+                    cursor.moveToLast();
+                    spielerzahl = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_SPIELERZAHL));
+                    spieler1 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER1));
+                    spieler2 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER2));
+                    spieler3 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER3));
+                    spieler4 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER4));
+                    if (spieler4 == null) spieler4 = "";
+                    spieler5 = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_SPIELER5));
+                    if (spieler5 == null) spieler5 = "";
+                    geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
+                    geber = (geber % spielerzahl) + 1;
+                    bockRamschStatus = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_RAMSCH_STATUS));
+                    bockCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT));
+                    ramschCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_RAMSCH_COUNT));
+                    setLastPlayedRound(datum);
+                } catch (Exception e) {
+                    String spielerstring = intent.getStringExtra("spieler");
+                    if (spielerstring == null) {
+                        Toast.makeText(getApplicationContext(), "Keine Daten vorhanden. Neues Spiel erstellen oder laden.", Toast.LENGTH_SHORT).show();
+                        Intent intentMain = new Intent(getApplicationContext(), MainMenuActivity.class);
+                        startActivity(intentMain);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Keine Runde eingetragen, erstelle neues Spiel.", Toast.LENGTH_SHORT).show();
+                        String[] spieler = spielerstring.split(", ");
+                        spielerzahl = spieler.length;
+                        spieler1 = spieler[0];
+                        spieler2 = spieler[1];
+                        spieler3 = spieler[2];
+                        if (spielerzahl >= 4) {
+                            spieler4 = spieler[3];
+                        } else {
+                            spieler4 = "";
+                        }
+                        if (spielerzahl >= 5) {
+                            spieler5 = spieler[4];
+                        } else {
+                            spieler5 = "";
+                        }
+                        geber = 1;
+                        bockRamschStatus = 0;
+                        bockCount = 0;
+                        ramschCount = 0;
+                        setLastPlayedRound(datum);
+                    }
+                }
                 break;
             case INTENT_FLAG_DEFAULT:
                 break;
@@ -220,27 +248,31 @@ public class SkatListActivity extends ActivityWithSkatinfo {
 
             startActivity(intent);
         } else if (id == R.id.menuDeleteLastRound) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder
-                    .setTitle("Löschen")
-                    .setMessage("Letzte Runde löschen?")
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Yes pressed
-                            dbCon.deleteLastGameForDate(datum);
-                            updateListViewAndAdapter();
-                            geber -= 1;
-                            if (geber <= 0) {
-                                geber = spielerzahl;
+            if (listView.getCount() == 0) {
+                Toast.makeText(getApplication(), "Noch keine Runde eingetragen.", Toast.LENGTH_SHORT).show();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder
+                        .setTitle("Löschen")
+                        .setMessage("Letzte Runde löschen?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Yes pressed
+                                dbCon.deleteLastGameForDate(datum);
+                                updateListViewAndAdapter();
+                                geber -= 1;
+                                if (geber <= 0) {
+                                    geber = spielerzahl;
+                                }
+                                ramschCount = oldRamschCount; // Restore backup
+                                bockRamschStatus = oldBockRamschStatus;
+                                bockCount = oldBockCount;
                             }
-                            ramschCount = oldRamschCount; // Restore backup
-                            bockRamschStatus = oldBockRamschStatus;
-                            bockCount = oldBockCount;
-                        }
-                    })
-                    .setNegativeButton("Nein", null) //Do nothing on no
-                    .show();
+                        })
+                        .setNegativeButton("Nein", null) //Do nothing on no
+                        .show();
+            }
         } else if (id == R.id.menuExport) {
             final Cursor cursor = dbCon.fetchForDate(datum);
             new Thread(new Task(cursor, datum)).start();
@@ -292,5 +324,11 @@ public class SkatListActivity extends ActivityWithSkatinfo {
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(SkatListActivity.this, layoutId, cursor, from, into, 0);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
+    }
+
+    private void setLastPlayedRound(String date) {
+        SharedPreferences.Editor editor = getSharedPreferences("skatPrefs", MODE_PRIVATE).edit();
+        editor.putString("lastRound", date);
+        editor.apply();
     }
 }

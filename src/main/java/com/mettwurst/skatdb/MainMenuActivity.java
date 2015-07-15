@@ -2,6 +2,7 @@ package com.mettwurst.skatdb;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -52,19 +53,9 @@ public class MainMenuActivity extends Activity {
     }
 
     public void spielFortsetzen(View view) {
-        String datum = null;
-        boolean noGame = false;
-        try {
-            DBController dbCon = new DBController(this);
-            dbCon.open();
-            final Cursor cursor = dbCon.fetch();
-            cursor.moveToLast();
-            datum = cursor.getString(cursor.getColumnIndex(DBContract.Entry.COL_DATUM));
-            dbCon.close();
-        } catch (Exception e) {
-            noGame = true;
-        }
-        if (noGame || datum == null) {
+        SharedPreferences prefs = getSharedPreferences("skatPrefs", MODE_PRIVATE);
+        String datum = prefs.getString("lastRound", null);
+        if (datum == null) {
             Toast.makeText(getApplicationContext(), "Kein Spiel gefunden. Neues Spiel starten.", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), SkatListActivity.class);
