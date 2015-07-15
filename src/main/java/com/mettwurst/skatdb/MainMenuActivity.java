@@ -75,7 +75,7 @@ public class MainMenuActivity extends Activity {
     }
 
     public void spielLaden(View view) {
-        // TODO
-        Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), LoadGameActivity.class);
+        startActivity(intent);
     }
 }

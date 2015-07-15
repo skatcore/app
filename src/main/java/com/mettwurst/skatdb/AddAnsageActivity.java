@@ -3,6 +3,7 @@ package com.mettwurst.skatdb;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -187,35 +188,36 @@ public class AddAnsageActivity extends Activity{
         CompoundButton.OnCheckedChangeListener cbListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean keinNull = !spiel.equals("Null");
                 switch (buttonView.getId()) {
                     case R.id.cbHandspiel:
                         if (!isChecked) {
                             cbSchneiderAngesagt.setChecked(false);
                             cbSchwarzAngesagt.setChecked(false);
-                            cbOuvert.setChecked(false);
+                            if (keinNull) cbOuvert.setChecked(false);
                         }
                         break;
                     case R.id.cbOuvert:
                         if (isChecked) {
-                            cbHandspiel.setChecked(true);
+                            if (keinNull) cbHandspiel.setChecked(true);
                             cbSchneiderAngesagt.setChecked(true);
                             cbSchwarzAngesagt.setChecked(true);
                         }
                         break;
                     case R.id.cbSchneiderAngesagt:
                         if (isChecked) {
-                            cbHandspiel.setChecked(true);
+                            if (keinNull) cbHandspiel.setChecked(true);
                         } else {
                             cbSchwarzAngesagt.setChecked(false);
-                            cbOuvert.setChecked(false);
+                            if (keinNull) cbOuvert.setChecked(false);
                         }
                         break;
                     case R.id.cbSchwarzAngesagt:
                         if (isChecked) {
-                            cbHandspiel.setChecked(true);
+                            if (keinNull) cbHandspiel.setChecked(true);
                             cbSchneiderAngesagt.setChecked(true);
                         } else {
-                            cbOuvert.setChecked(false);
+                            if (keinNull) cbOuvert.setChecked(false);
                         }
                         break;
                     case R.id.cbKontra:

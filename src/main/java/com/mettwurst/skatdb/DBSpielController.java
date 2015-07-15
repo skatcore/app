@@ -31,20 +31,17 @@ public class DBSpielController {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(Entry.COL_DATUM, date);
-        values.put(Entry.COL_SPIELER1, spieler[0]);
-        values.put(Entry.COL_SPIELER2, spieler[1]);
-        values.put(Entry.COL_SPIELER3, spieler[2]);
-        String spieler4 = spieler[3];
-        if (spieler4 == null) {
-            spieler4 = "";
+        String s = spieler[0]
+                +"," +spieler[1]
+                +"," +spieler[2];
+        if (spieler.length >= 4 && spieler[3] != null && !spieler[3].equals("")) {
+            s += "," +spieler[3];
         }
-        values.put(Entry.COL_SPIELER4, spieler4);
-        String spieler5 = spieler[4];
-        if (spieler5 == null) {
-            spieler5 = "";
+        if (spieler.length >= 5 && spieler[4] != null && !spieler[4].equals("")) {
+            s += "," +spieler[4];
         }
-        values.put(Entry.COL_SPIELER5, spieler5);
-
+        
+        values.put(Entry.COL_SPIELER, s);
         return database.insert(Entry.TABLE_NAME, Entry.NULL_COLUMN_HACK, values);
     }
 

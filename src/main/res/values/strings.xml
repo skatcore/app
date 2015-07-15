@@ -55,5 +55,8 @@
     <string name="menuSaveUpdate">Save</string>
     <string name="menuDeleteRound">Delete</string>
     <string name="menuDeleteLastRound">Delete Last Round</string>
+    <string name="title_activity_load_game">Load Game</string>
+    <string name="col_datum">Datum</string>
+    <string name="col_spieler">Spieler</string>
 
 </resources>

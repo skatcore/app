@@ -15,11 +15,7 @@ public class DBSpielHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + DBSpielContract.Entry.TABLE_NAME +" (" +
                     Entry._ID 				            +" INTEGER PRIMARY KEY" 	+COMMA_SEP +
                     Entry.COL_DATUM     	            + " DATETIME"  				+COMMA_SEP +
-                    Entry.COL_SPIELER1    	            +TEXT_TYPE 					+COMMA_SEP +
-                    Entry.COL_SPIELER2    	            +TEXT_TYPE 					+COMMA_SEP +
-                    Entry.COL_SPIELER3    	            +TEXT_TYPE 					+COMMA_SEP +
-                    Entry.COL_SPIELER4    	            +TEXT_TYPE 					+COMMA_SEP +
-                    Entry.COL_SPIELER5    	            +TEXT_TYPE +
+                    Entry.COL_SPIELER    	            +TEXT_TYPE +
                     " )";
 
 	private static final String SQL_DELETE_ENTRIES =
