@@ -1,10 +1,10 @@
 package com.mettwurst.skatdb;
 
-import com.mettwurst.skatdb.DBContract.Entry;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.mettwurst.skatdb.DBContract.Entry;
 
 public class DBHelper extends SQLiteOpenHelper {
 

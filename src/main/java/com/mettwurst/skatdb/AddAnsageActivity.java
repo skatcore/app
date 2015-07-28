@@ -3,7 +3,6 @@ package com.mettwurst.skatdb;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -455,5 +454,12 @@ public class AddAnsageActivity extends Activity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setBubenZahlVisible(View view) {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.rgBubenZahl);
+        if (radioGroup.getVisibility() != View.VISIBLE) {
+            radioGroup.setVisibility(View.VISIBLE);
+        }
     }
 }

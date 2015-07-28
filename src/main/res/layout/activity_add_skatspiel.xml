@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp" >
+    android:padding="10dp" >
 
     <LinearLayout
         android:orientation="horizontal"
@@ -66,5 +66,74 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvSpielAuswertung"
         android:paddingTop="20sp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llBuben2"
+        android:weightSum="2">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:id="@+id/rgBubenMitOhne">
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/rbMit"
+                android:id="@+id/radioButton"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/rbOhne"
+                android:id="@+id/radioButton2"
+                android:layout_weight="1" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/rgBubenZahl"
+            android:weightSum="4"
+            android:visibility="invisible">
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rbBuben1"
+                android:id="@+id/radioButton3"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rbBuben2"
+                android:id="@+id/radioButton4"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rbBuben3"
+                android:id="@+id/radioButton5"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rbBuben4"
+                android:id="@+id/radioButton6"
+                android:layout_weight="1" />
+        </RadioGroup>
+
+    </LinearLayout>
 
 </LinearLayout>

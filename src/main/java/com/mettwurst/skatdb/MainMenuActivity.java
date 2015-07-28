@@ -69,8 +69,10 @@ public class MainMenuActivity extends Activity {
     }
 
     public void spielLaden(View view) {
-        Intent intent = new Intent(getApplicationContext(), LoadGameActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(getApplicationContext(), LoadGameActivity.class);
+        // TODO DEBUG
+        //Intent intent = new Intent(getApplicationContext(), X1Spiel.class);
+        //startActivity(intent);
     }
 
     private void calculateStats() {

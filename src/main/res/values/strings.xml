@@ -52,5 +52,14 @@
     <string name="tvSpielernamen">Spieler</string>
     <string name="tvSpielerzahl">3 Spieler</string>
     <string name="title_activity_add_ansage">Ansage machen</string>
+    <string name="rbMit">Mit</string>
+    <string name="rbOhne">Ohne</string>
+    <string name="rbBuben1">1</string>
+    <string name="rbBuben2">2</string>
+    <string name="rbBuben3">3</string>
+    <string name="rbBuben4">4</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
