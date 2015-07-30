@@ -66,23 +66,24 @@ public class AddAnsageActivity extends Activity{
         private RadioButton rbHerz;
         private RadioButton rbKaro;
         private RadioButton rbDummy2;
-    private TextView tvAnsagen;
-    private LinearLayout llHandOuvertAnsagen;
-        private CheckBox cbHandspiel;
-        private CheckBox cbOuvert;
-    private LinearLayout llSchneiderSchwarz;
-        private CheckBox cbSchneiderAngesagt;
-        private CheckBox cbSchwarzAngesagt;
-    private LinearLayout llKontraRe;
-        private CheckBox cbKontra;
-        private CheckBox cbRe;
-    private LinearLayout llJungfrauAnsagen;
-        private CheckBox cbJungfrauAnsage1;
-        private CheckBox cbJungfrauAnsage2;
-        private CheckBox cbJungfrauAnsage3;
-    private LinearLayout llReizwert;
+    private LinearLayout llNichtRamsch;
+        private TextView tvAnsagen;
+        private LinearLayout llHandOuvertAnsagen;
+            private CheckBox cbHandspiel;
+            private CheckBox cbOuvert;
+        private LinearLayout llSchneiderSchwarz;
+            private CheckBox cbSchneiderAngesagt;
+            private CheckBox cbSchwarzAngesagt;
+        private LinearLayout llKontraRe;
+            private CheckBox cbKontra;
+            private CheckBox cbRe;
+        private LinearLayout llReizwert;
         private NumberPicker npReizwert;
-    private TextView tvAufspiel;
+    private LinearLayout llRamsch;
+        private LinearLayout llJungfrauAnsagen;
+            private CheckBox cbJungfrauAnsage1;
+            private CheckBox cbJungfrauAnsage2;
+            private CheckBox cbJungfrauAnsage3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +136,6 @@ public class AddAnsageActivity extends Activity{
         cbKontra            = (CheckBox) findViewById(R.id.cbKontra);
         cbRe                = (CheckBox) findViewById(R.id.cbRe);
         npReizwert          = (NumberPicker) findViewById(R.id.npReizwert);
-        tvAufspiel          = (TextView) findViewById(R.id.tvAufspiel);
         llSolist            = (LinearLayout) findViewById(R.id.llSolist);
         llHandOuvertAnsagen = (LinearLayout) findViewById(R.id.llHandOuvertAnsagen);
         llSchneiderSchwarz  = (LinearLayout) findViewById(R.id.llSchneiderSchwarz);
@@ -146,6 +146,7 @@ public class AddAnsageActivity extends Activity{
         cbJungfrauAnsage2   = (CheckBox) findViewById(R.id.cbJungfrauAnsage2);
         cbJungfrauAnsage3   = (CheckBox) findViewById(R.id.cbJungfrauAnsage3);
         tvAnsagen           = (TextView) findViewById(R.id.tvAnsagen);
+        llNichtRamsch = (LinearLayout) findViewById(R.id.llNichtRamsch);
 
         // Namen der Solisten eintragen
         playingPlayersInOrder = AddSkatrundeActivity.getPlayingPlayersInOrder(geber, spielerzahl, spieler1, spieler2, spieler3, spieler4, spieler5);
@@ -254,27 +255,6 @@ public class AddAnsageActivity extends Activity{
         cbJungfrauAnsage2.setText(playingPlayersInOrder[1]);
         cbJungfrauAnsage3.setText(playingPlayersInOrder[2]);
 
-        // Spieler nach dem Geber spielt auf
-        final String aufspiel;
-        switch (geber) {
-            case 1:
-                aufspiel = spieler2;
-                break;
-            case 2:
-                aufspiel = spieler3;
-                break;
-            case 3:
-                aufspiel = (spielerzahl >= 4) ? spieler4 : spieler1;
-                break;
-            case 4:
-                aufspiel = (spielerzahl >= 5) ? spieler5 : spieler1;
-                break;
-            default: // 5
-                aufspiel = spieler1;
-                break;
-        }
-        tvAufspiel.setText("Aufspiel: " +aufspiel);
-
         if (pflichtramsch) {
             setPflichtramsch();
             rbRamsch.callOnClick();
@@ -282,13 +262,6 @@ public class AddAnsageActivity extends Activity{
             // Irgendwas als Voreinstellung nehmen, damit Layout generiert wird.
             rbKreuz.performClick();
         }
-
-        /*
-        // DEBUG: Clear all rows from table
-        DBController dbCon = new DBController(this);
-        dbCon.open();
-        dbCon.clearTable();
-        */
     }
 
     // Passt Layout und Auswahlmoeglichkeiten an Pflichramsch an

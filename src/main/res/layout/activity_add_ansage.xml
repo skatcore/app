@@ -91,245 +91,302 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/llSolist">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tvSolist"
-            android:id="@+id/tvSolist" />
-
-        <RadioGroup
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rgSolist"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rbSolist1"
-                android:checked="true"
-                android:layout_weight="1" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rbSolist2"
-                android:layout_weight="1" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rbSolist3"
-                android:layout_weight="1" />
-
-        </RadioGroup>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tvAnsagen"
-        android:id="@+id/tvAnsagen" />
-
-    <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llHandOuvertAnsagen">
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cbHandspiel"
-            android:id="@+id/cbHandspiel" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cbOuvert"
-            android:id="@+id/cbOuvert" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/llSchneiderSchwarz">
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cbSchneiderAngesagt"
-            android:id="@+id/cbSchneiderAngesagt" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cbSchwarzAngesagt"
-            android:id="@+id/cbSchwarzAngesagt" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/llKontraRe">
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cbKontra"
-            android:id="@+id/cbKontra" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cbRe"
-            android:id="@+id/cbRe" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/llJungfrauAnsagen"
-        android:weightSum="3"
-        android:visibility="gone">
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/cbJungfrauAnsage1"
-            android:layout_weight="1" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/cbJungfrauAnsage2"
-            android:layout_weight="1" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/cbJungfrauAnsage3"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="162dp">
+        android:id="@+id/llNichtRamsch">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/llReizwert">
+            android:id="@+id/llSolist">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tvReizwert"
-                android:id="@+id/tvReizwert"
-                android:layout_gravity="left" />
+                android:text="@string/tvSolist"
+                android:id="@+id/tvSolist" />
 
-            <NumberPicker
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/npReizwert" />
+                android:id="@+id/rgSolist"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbSolist1"
+                    android:checked="true"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbSolist2"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rbSolist3"
+                    android:layout_weight="1" />
+
+            </RadioGroup>
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvAufspiel"
-            android:text="@string/tvAufspiel"
-            android:layout_gravity="right"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true" />
+            android:text="@string/tvAnsagen"
+            android:id="@+id/tvAnsagen" />
 
-    </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llHandOuvertAnsagen">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cbHandspiel"
+                android:id="@+id/cbHandspiel" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cbOuvert"
+                android:id="@+id/cbOuvert" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llSchneiderSchwarz">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cbSchneiderAngesagt"
+                android:id="@+id/cbSchneiderAngesagt" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cbSchwarzAngesagt"
+                android:id="@+id/cbSchwarzAngesagt" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llKontraRe">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cbKontra"
+                android:id="@+id/cbKontra" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cbRe"
+                android:id="@+id/cbRe" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="162dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llReizwert">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvReizwert"
+                    android:id="@+id/tvReizwert"
+                    android:layout_gravity="left" />
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/npReizwert" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llBuben"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:id="@+id/radioGroup" >
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="@string/rbMit"
+                    android:id="@+id/radioButton7"
+                    android:layout_weight="1"
+                    android:onClick="setBubenZahlVisible" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="@string/rbOhne"
+                    android:id="@+id/radioButton8"
+                    android:layout_weight="1"
+                    android:onClick="setBubenZahlVisible" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/rgBubenZahl"
+                android:weightSum="4"
+                android:visibility="invisible" >
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbBuben1"
+                    android:id="@+id/radioButton9"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbBuben2"
+                    android:id="@+id/radioButton10"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbBuben3"
+                    android:id="@+id/radioButton11"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbBuben4"
+                    android:id="@+id/radioButton12"
+                    android:layout_weight="1" />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llBuben"
-        android:weightSum="2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:id="@+id/llRamsch"
+        android:weightSum="3"
+        android:visibility="visible">
 
-        <RadioGroup
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/llGeschoben"
+            android:weightSum="3">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbGeschoben1"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbGeschoben2"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbGeschoben3"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:id="@+id/radioGroup" >
-
-            <RadioButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="@string/rbMit"
-                android:id="@+id/radioButton7"
-                android:layout_weight="1"
-                android:onClick="setBubenZahlVisible" />
-
-            <RadioButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="@string/rbOhne"
-                android:id="@+id/radioButton8"
-                android:layout_weight="1"
-                android:onClick="setBubenZahlVisible" />
-        </RadioGroup>
-
-        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/llJungfrauAnsagen"
+            android:weightSum="3">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/cbJungfrauAnsage1"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/cbJungfrauAnsage2"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/cbJungfrauAnsage3"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
-            android:id="@+id/rgBubenZahl"
-            android:weightSum="4"
-            android:visibility="invisible" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/llJungfrauGespielt"
+            android:weightSum="3">
 
-            <RadioButton
-                android:layout_width="fill_parent"
+            <CheckBox
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/rbBuben1"
-                android:id="@+id/radioButton9"
+                android:id="@+id/cbJungfrauGespielt1"
                 android:layout_weight="1" />
 
-            <RadioButton
-                android:layout_width="fill_parent"
+            <CheckBox
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/rbBuben2"
-                android:id="@+id/radioButton10"
+                android:id="@+id/cbJungfrauGespielt2"
                 android:layout_weight="1" />
 
-            <RadioButton
-                android:layout_width="fill_parent"
+            <CheckBox
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/rbBuben3"
-                android:id="@+id/radioButton11"
+                android:id="@+id/cbJungfrauGespielt3"
                 android:layout_weight="1" />
+        </LinearLayout>
 
-            <RadioButton
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/rbBuben4"
-                android:id="@+id/radioButton12"
-                android:layout_weight="1" />
-        </RadioGroup>
     </LinearLayout>
 
 </LinearLayout>
