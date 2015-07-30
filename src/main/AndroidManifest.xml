@@ -72,6 +72,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mettwurst.skatdb.MainMenuActivity" />
         </activity>
+        <activity
+            android:name=".X1Spiel"
+            android:label="@string/title_activity_x1_spiel"
+            android:parentActivityName=".SkatListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.SkatListActivity" />
+        </activity>
     </application>
 
 </manifest>

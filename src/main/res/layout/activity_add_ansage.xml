@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/rbSolist1"
-                    android:checked="true"
+                    android:checked="false"
                     android:layout_weight="1" />
 
                 <RadioButton
@@ -201,39 +201,31 @@
                 android:id="@+id/cbRe" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="162dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llReizwert">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/llReizwert">
+                android:text="@string/tvReizwert"
+                android:id="@+id/tvReizwert"
+                android:layout_gravity="left" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvReizwert"
-                    android:id="@+id/tvReizwert"
-                    android:layout_gravity="left" />
-
-                <NumberPicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/npReizwert" />
-            </LinearLayout>
-
-        </RelativeLayout>
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/npReizwert" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/llBuben"
-            android:weightSum="2"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true">
+            android:weightSum="2">
 
             <RadioGroup
                 android:layout_width="match_parent"
