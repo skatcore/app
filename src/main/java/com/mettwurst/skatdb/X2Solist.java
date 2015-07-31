@@ -2,7 +2,6 @@ package com.mettwurst.skatdb;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -21,7 +20,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-import android.view.View;
 
 
 import java.util.List;
@@ -37,7 +35,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class X1Spiel extends PreferenceActivity {
+public class X2Solist extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,27 +86,30 @@ public class X1Spiel extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_1_spiel);
+        addPreferencesFromResource(R.xml.pref_2_solist);
 
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                final String spiel = String.valueOf(preference.getTitle());
+                final String solist = String.valueOf(preference.getTitle());
 
                 // TODO Felder fuellen, Intent starten
                 // this.spiel = spiel;
-                Intent intent = new Intent(getApplicationContext(), X2Solist.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), X2Solist.class);
+                //startActivity(intent);
 
                 return false;
             }
         };
 
-        String[] names = {"Grand", "Null", "Kreuz", "Pik", "Herz", "Karo", "Ramsch"};
         Preference preference;
-        for (int i = 0; i < names.length; i++) {
-            preference = findPreference(names[i]);
+        String[] keys = {"spieler1", "spieler2", "spieler3"};
+        for (int i = 0; i < 3; i++) {
+            preference = findPreference(keys[i]);
+            preference.setTitle(keys[i]); // TODO: Namen lesen
             preference.setOnPreferenceClickListener(listener);
         }
+
+
     }
 }
