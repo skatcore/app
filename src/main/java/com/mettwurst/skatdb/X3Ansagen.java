@@ -2,13 +2,13 @@ package com.mettwurst.skatdb;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -35,7 +35,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class X2Solist extends PreferenceActivity {
+public class X3Ansagen extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,30 +86,71 @@ public class X2Solist extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_2_solist);
+        addPreferencesFromResource(R.xml.pref_3_ansagen);
 
+        final CheckBoxPreference[] preferences = new CheckBoxPreference[6];
+        String[] keys = {"hand", "schneider", "schwarz", "ouvert", "kontra", "re"};
+        for (int i = 0; i < keys.length; i++) {
+            preferences[i] = (CheckBoxPreference) findPreference(keys[i]);
+        }
+
+        final String spiel = "Kreuz"; // TODO DUMMY
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                final String solist = String.valueOf(preference.getTitle());
+                final boolean isChecked = ((CheckBoxPreference) preference).isChecked();
 
-                // TODO Felder fuellen, Intent starten
-                // this.spiel = spiel;
-                Intent intent = new Intent(getApplicationContext(), X3Ansagen.class);
-                startActivity(intent);
-
+                switch (String.valueOf(preference.getTitle())) {
+                    case "Hand":
+                        if (isChecked) {
+                        } else {
+                            preferences[1].setChecked(false);
+                            preferences[2].setChecked(false);
+                            preferences[3].setChecked(false);
+                        }
+                        break;
+                    case "Schneider":
+                        if (isChecked) {
+                            preferences[0].setChecked(true);
+                        } else {
+                            preferences[2].setChecked(false);
+                            preferences[3].setChecked(false);
+                        }
+                        break;
+                    case "Schwarz":
+                        if (isChecked) {
+                            preferences[0].setChecked(true);
+                            preferences[1].setChecked(true);
+                        } else {
+                            preferences[3].setChecked(false);
+                        }
+                        break;
+                    case "Ouvert":
+                        if (isChecked) {
+                            preferences[0].setChecked(true);
+                            preferences[1].setChecked(true);
+                            preferences[2].setChecked(true);
+                        }
+                        break;
+                    case "Kontra":
+                        if (!isChecked) {
+                            preferences[5].setChecked(false);
+                        }
+                        break;
+                    case "Re":
+                        if (isChecked) {
+                            preferences[4].setChecked(true);
+                        }
+                        break;
+                }
                 return false;
             }
         };
 
         Preference preference;
-        String[] keys = {"spieler1", "spieler2", "spieler3"};
         for (int i = 0; i < keys.length; i++) {
             preference = findPreference(keys[i]);
-            preference.setTitle(keys[i]); // TODO: Namen lesen
             preference.setOnPreferenceClickListener(listener);
         }
-
-
     }
 }
