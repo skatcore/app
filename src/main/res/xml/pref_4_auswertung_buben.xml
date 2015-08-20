@@ -1,11 +1,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:key="buben"
-        android:title="Buben"
-        android:defaultValue="-1"
-        android:entries="@array/buben_titel"
-        android:entryValues="@array/buben_values"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null" />
+    <Preference
+        android:title="Mit / ohne 1"
+        android:key="buben1"></Preference>
+    <Preference
+        android:title="Mit / ohne 2"
+        android:key="buben2"></Preference>
+    <Preference
+        android:title="Mit / ohne 3"
+        android:key="buben3"></Preference>
+    <Preference
+        android:title="Mit / ohne 4"
+        android:key="buben4"></Preference>
 </PreferenceScreen>

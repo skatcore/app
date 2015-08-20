@@ -64,6 +64,8 @@
     <string name="title_activity_x1_spiel">Spiel</string>
     <string name="title_activity_x2_solist">Solist</string>
     <string name="title_activity_x3_ansagen">Ansagen</string>
-    <string name="title_activity_x4_auswertung">Auswertung</string>
+    <string name="title_activity_x4_auswertung">Auswertung: Buben</string>
+    <string name="title_activity_x5_auswertung_ausgang">Auswertung: Ausgang</string>
+    <string name="title_activity_x6_auswertung_schneider">Auswertung: Schneider</string>
 
 </resources>

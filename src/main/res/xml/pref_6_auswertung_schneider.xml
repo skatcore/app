@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:title="Schneider"
+        android:key="schneider"></CheckBoxPreference>
+    <CheckBoxPreference
+        android:title="Schwarz"
+        android:key="schwarz"></CheckBoxPreference>
+
+</PreferenceScreen>

@@ -1,14 +1,26 @@
 package com.mettwurst.skatdb;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.preference.RingtonePreference;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+
+import java.util.List;
 
 
 /**
@@ -22,7 +34,7 @@ import android.support.v4.app.NavUtils;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class X4AuswertungBuben extends PreferenceActivity {
+public class X5AuswertungAusgang extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,42 +85,27 @@ public class X4AuswertungBuben extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_4_auswertung_buben);
-
-        final Preference[] preferences = new Preference[4];
-        String[] keys = {"buben1", "buben2", "buben3", "buben4"};
-        for (int i = 0; i < keys.length; i++) {
-            preferences[i] = findPreference(keys[i]);
-        }
+        addPreferencesFromResource(R.xml.pref_5_auswertung_ausgang);
 
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
                 switch (String.valueOf(preference.getKey())) {
-                    case "buben1":
+                    case "gewonnen":
 
                         break;
-                    case "buben2":
-
-                        break;
-                    case "buben3":
-
-                        break;
-                    case "buben4":
+                    case "verloren":
 
                         break;
                 }
-                Intent intent = new Intent(getApplicationContext(), X5AuswertungAusgang.class);
+                Intent intent = new Intent(getApplicationContext(), X6AuswertungSchneider.class);
                 startActivity(intent);
                 return false;
             }
         };
 
-        Preference preference;
-        for (int i = 0; i < keys.length; i++) {
-            preference = findPreference(keys[i]);
-            preference.setOnPreferenceClickListener(listener);
-        }
+        findPreference("gewonnen").setOnPreferenceClickListener(listener);
+        findPreference("verloren").setOnPreferenceClickListener(listener);
     }
 }

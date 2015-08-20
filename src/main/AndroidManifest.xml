@@ -104,6 +104,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mettwurst.skatdb.X3Ansagen" />
         </activity>
+        <activity
+            android:name=".X5AuswertungAusgang"
+            android:label="@string/title_activity_x5_auswertung_ausgang"
+            android:parentActivityName=".X4AuswertungBuben" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.X4AuswertungBuben" />
+        </activity>
+        <activity
+            android:name=".X6AuswertungSchneider"
+            android:label="@string/title_activity_x6_auswertung_schneider"
+            android:parentActivityName=".X5AuswertungAusgang" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.X5AuswertungAusgang" />
+        </activity>
     </application>
 
 </manifest>
