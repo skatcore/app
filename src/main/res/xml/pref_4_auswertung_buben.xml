@@ -1,0 +1,11 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="buben"
+        android:title="Buben"
+        android:defaultValue="-1"
+        android:entries="@array/buben_titel"
+        android:entryValues="@array/buben_values"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+</PreferenceScreen>

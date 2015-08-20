@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="buben_titel">
+        <item>Mit / ohne 1</item>
+        <item>Mit / ohne 2</item>
+        <item>Mit / ohne 3</item>
+        <item>Mit / ohne 4</item>
+    </string-array>
+
+    <string-array
+        name="buben_values">
+        <item>buben1</item>
+        <item>buben2</item>
+        <item>buben3</item>
+        <item>buben4</item>
+    </string-array>
+</resources>

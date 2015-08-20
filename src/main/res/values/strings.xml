@@ -59,11 +59,11 @@
     <string name="rbBuben3">3</string>
     <string name="rbBuben4">4</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="title_activity_x1_spiel">Spiel</string>
     <string name="title_activity_x2_solist">Solist</string>
     <string name="title_activity_x3_ansagen">Ansagen</string>
+    <string name="title_activity_x4_auswertung">Auswertung</string>
 
 </resources>

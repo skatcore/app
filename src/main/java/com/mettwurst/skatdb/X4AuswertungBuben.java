@@ -1,14 +1,13 @@
 package com.mettwurst.skatdb;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -21,7 +20,7 @@ import android.support.v4.app.NavUtils;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class X3Ansagen extends PreferenceActivity {
+public class X4AuswertungBuben extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +71,16 @@ public class X3Ansagen extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_3_ansagen);
+        addPreferencesFromResource(R.xml.pref_4_auswertung_buben);
 
         final CheckBoxPreference[] preferences = new CheckBoxPreference[6];
         String[] keys = {"hand", "schneider", "schwarz", "ouvert", "kontra", "re"};
         for (int i = 0; i < keys.length; i++) {
             preferences[i] = (CheckBoxPreference) findPreference(keys[i]);
         }
-
+/*
         final String spiel = "Kreuz"; // TODO DUMMY
-        Preference.OnPreferenceClickListener checkBoxListener = new Preference.OnPreferenceClickListener() {
+        Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 final boolean isChecked = ((CheckBoxPreference) preference).isChecked();
@@ -136,17 +135,7 @@ public class X3Ansagen extends PreferenceActivity {
         Preference preference;
         for (int i = 0; i < keys.length; i++) {
             preference = findPreference(keys[i]);
-            preference.setOnPreferenceClickListener(checkBoxListener);
-        }
-
-        preference = findPreference("weiter");
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(getApplicationContext(), X4AuswertungBuben.class);
-                startActivity(intent);
-                return false;
-            }
-        });
+            preference.setOnPreferenceClickListener(listener);
+        }*/
     }
 }

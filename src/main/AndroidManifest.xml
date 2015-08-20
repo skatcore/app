@@ -96,6 +96,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mettwurst.skatdb.X2Solist" />
         </activity>
+        <activity
+            android:name=".X4AuswertungBuben"
+            android:label="@string/title_activity_x4_auswertung"
+            android:parentActivityName=".X3Ansagen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.X3Ansagen" />
+        </activity>
     </application>
 
 </manifest>

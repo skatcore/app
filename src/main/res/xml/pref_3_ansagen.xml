@@ -1,5 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference android:title="Weiter"
+        android:key="weiter"></Preference>
     <CheckBoxPreference
         android:key="hand"
         android:title="Hand"
