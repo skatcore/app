@@ -67,5 +67,9 @@
     <string name="title_activity_x4_auswertung">Auswertung: Buben</string>
     <string name="title_activity_x5_auswertung_ausgang">Auswertung: Ausgang</string>
     <string name="title_activity_x6_auswertung_schneider">Auswertung: Schneider</string>
+    <string name="title_activity_auswertung">Auswertung: Übersicht</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_x7_auswertung">Auswertung</string>
 
 </resources>
