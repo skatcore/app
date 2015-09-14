@@ -10,6 +10,8 @@ import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
+import java.nio.channels.SelectionKey;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -72,16 +74,41 @@ public class X3Ansagen extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_3_ansagen);
+        boolean isNullspiel = SkatInfoSingleton.getInstance().spiel.equals("Null");
+        if (isNullspiel) {
+            addPreferencesFromResource(R.xml.pref_3_ansagen_null);
+        } else {
+            addPreferencesFromResource(R.xml.pref_3_ansagen_normal);
+        }
 
-        final CheckBoxPreference[] preferences = new CheckBoxPreference[6];
-        String[] keys = {"hand", "schneider", "schwarz", "ouvert", "kontra", "re"};
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("vor", false)) {
+            // Alte Eingaben leeren
+            ((CheckBoxPreference) findPreference("hand")).setChecked(false);
+            ((CheckBoxPreference) findPreference("ouvert")).setChecked(false);
+            ((CheckBoxPreference) findPreference("kontra")).setChecked(false);
+            ((CheckBoxPreference) findPreference("re")).setChecked(false);
+            if (!isNullspiel) {
+                ((CheckBoxPreference) findPreference("schneider")).setChecked(false);
+                ((CheckBoxPreference) findPreference("schwarz")).setChecked(false);
+            }
+        }
+
+        final CheckBoxPreference[] preferences;
+        String[] keys;
+
+        if (!SkatInfoSingleton.getInstance().spiel.equals("Null")) {
+            preferences = new CheckBoxPreference[6];
+            keys = new String[]{"hand", "schneider", "schwarz", "ouvert", "kontra", "re"};
+        } else {
+            preferences = new CheckBoxPreference[4];
+            keys = new String[]{"hand", "ouvert", "kontra", "re"};
+        }
         for (int i = 0; i < keys.length; i++) {
             preferences[i] = (CheckBoxPreference) findPreference(keys[i]);
         }
 
-        final String spiel = "Kreuz"; // TODO DUMMY
-        Preference.OnPreferenceClickListener checkBoxListener = new Preference.OnPreferenceClickListener() {
+        Preference.OnPreferenceClickListener checkBoxListenerNormal = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 final boolean isChecked = ((CheckBoxPreference) preference).isChecked();
@@ -133,16 +160,57 @@ public class X3Ansagen extends PreferenceActivity {
             }
         };
 
+        Preference.OnPreferenceClickListener checkBoxListenerNull = new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                final boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+
+                switch (String.valueOf(preference.getTitle())) {
+                    case "Kontra":
+                        if (!isChecked) {
+                            preferences[3].setChecked(false);
+                        }
+                        break;
+                    case "Re":
+                        if (isChecked) {
+                            preferences[2].setChecked(true);
+                        }
+                        break;
+                }
+                return false;
+            }
+        };
+
+        // Assign listener
         Preference preference;
         for (int i = 0; i < keys.length; i++) {
             preference = findPreference(keys[i]);
-            preference.setOnPreferenceClickListener(checkBoxListener);
+            if (isNullspiel) {
+                preference.setOnPreferenceClickListener(checkBoxListenerNull);
+            } else {
+                preference.setOnPreferenceClickListener(checkBoxListenerNormal);
+            }
         }
 
         preference = findPreference("weiter");
         preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+                boolean isNullspiel = infoSingleton.spiel.equals("Null");
+
+                infoSingleton.handspiel = ((CheckBoxPreference) findPreference("hand")).isChecked() ? 1 : 0;
+                infoSingleton.ouvert = ((CheckBoxPreference) findPreference("ouvert")).isChecked() ? 1 : 0;
+                if (isNullspiel) {
+                    infoSingleton.schneider_angesagt = 0;
+                    infoSingleton.schwarz_angesagt = 0;
+                } else {
+                    infoSingleton.schneider_angesagt = ((CheckBoxPreference) findPreference("schneider")).isChecked() ? 1 : 0;
+                    infoSingleton.schwarz_angesagt = ((CheckBoxPreference) findPreference("schwarz")).isChecked() ? 1 : 0;
+                }
+                infoSingleton.kontra = ((CheckBoxPreference) findPreference("kontra")).isChecked() ? 1 : 0;
+                infoSingleton.re = ((CheckBoxPreference) findPreference("re")).isChecked() ? 1 : 0;
+
                 Intent intent = new Intent(getApplicationContext(), X4AuswertungBuben.class);
                 startActivity(intent);
                 return false;

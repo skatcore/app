@@ -96,6 +96,7 @@ public class X2Solist extends PreferenceActivity {
                 SkatInfoSingleton.getInstance().solist = String.valueOf(preference.getTitle());
 
                 Intent intent = new Intent(getApplicationContext(), X3Ansagen.class);
+                intent.putExtra("vor", true);
                 startActivity(intent);
 
                 return false;

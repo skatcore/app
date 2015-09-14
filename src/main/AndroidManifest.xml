@@ -136,6 +136,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mettwurst.skatdb.X6AuswertungSchneider" />
         </activity>
+        <activity
+            android:name=".X7AuswertungRamsch"
+            android:label="@string/title_activity_x7_auswertung_ramsch"
+            android:parentActivityName=".X1Spiel" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.X1Spiel" />
+        </activity>
     </application>
 
 </manifest>

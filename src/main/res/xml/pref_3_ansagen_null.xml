@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference android:title="Weiter"
+        android:key="weiter"></Preference>
+    <CheckBoxPreference
+        android:key="hand"
+        android:title="Hand"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="ouvert"
+        android:title="Ouvert"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="kontra"
+        android:title="Kontra"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="re"
+        android:title="Re"
+        android:defaultValue="false" />
+</PreferenceScreen>

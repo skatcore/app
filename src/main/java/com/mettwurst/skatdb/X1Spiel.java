@@ -103,11 +103,22 @@ public class X1Spiel extends PreferenceActivity {
             }
         };
 
-        String[] names = {"Grand", "Null", "Kreuz", "Pik", "Herz", "Karo", "Ramsch"};
+        String[] names = {"Grand", "Null", "Kreuz", "Pik", "Herz", "Karo"};
         Preference preference;
         for (int i = 0; i < names.length; i++) {
             preference = findPreference(names[i]);
             preference.setOnPreferenceClickListener(listener);
         }
+
+        preference = findPreference("Ramsch");
+        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getApplicationContext(), X7AuswertungRamsch.class);
+                intent.putExtra("Ramsch", true);
+                startActivity(intent);
+                return false;
+            }
+        });
     }
 }

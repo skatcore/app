@@ -92,16 +92,20 @@ public class X6AuswertungSchneider extends PreferenceActivity {
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
 
                 switch (String.valueOf(preference.getKey())) {
                     case "normal":
-
+                        infoSingleton.schneider_gespielt = 0;
+                        infoSingleton.schwarz_gespielt = 0;
                         break;
                     case "schenider":
-
+                        infoSingleton.schneider_gespielt = 1;
+                        infoSingleton.schwarz_gespielt = 0;
                         break;
                     case "schwarz":
-
+                        infoSingleton.schneider_gespielt = 1;
+                        infoSingleton.schwarz_gespielt = 1;
                         break;
                 }
 

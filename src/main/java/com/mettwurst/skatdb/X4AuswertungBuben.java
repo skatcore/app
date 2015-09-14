@@ -84,19 +84,20 @@ public class X4AuswertungBuben extends PreferenceActivity {
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
 
                 switch (String.valueOf(preference.getKey())) {
                     case "buben1":
-
+                        infoSingleton.buben_multiplikator = 2;
                         break;
                     case "buben2":
-
+                        infoSingleton.buben_multiplikator = 3;
                         break;
                     case "buben3":
-
+                        infoSingleton.buben_multiplikator = 4;
                         break;
                     case "buben4":
-
+                        infoSingleton.buben_multiplikator = 5;
                         break;
                 }
                 Intent intent = new Intent(getApplicationContext(), X5AuswertungAusgang.class);

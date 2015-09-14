@@ -90,13 +90,14 @@ public class X5AuswertungAusgang extends PreferenceActivity {
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
 
                 switch (String.valueOf(preference.getKey())) {
                     case "gewonnen":
-
+                        infoSingleton.solist_gewonnen = 1;
                         break;
                     case "verloren":
-
+                        infoSingleton.solist_gewonnen = 0;
                         break;
                 }
                 Intent intent = new Intent(getApplicationContext(), X6AuswertungSchneider.class);
