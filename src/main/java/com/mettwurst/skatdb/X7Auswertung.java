@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class X7Auswertung extends Activity {
 
@@ -14,6 +15,44 @@ public class X7Auswertung extends Activity {
 
         String s = "";
         // TODO: Hier weiter machen
+
+        SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+        int spielwert = 0; // TODO DEBUG: Remove init
+
+        switch(infoSingleton.spiel) {
+            case "Null":
+                if (infoSingleton.ouvert == 1 && infoSingleton.handspiel == 1) {
+                    spielwert = 59;
+                    s += "Null Hand Ouvert = 59";
+                } else if (infoSingleton.ouvert == 1) {
+                    spielwert = 46;
+                    s += "Null Ouvert = 46";
+                } else if (infoSingleton.handspiel == 1) {
+                    spielwert = 35;
+                    s += "Null Hand = 35";
+                } else {
+                    spielwert = 23;
+                    s += "Null = 23";
+                }
+                if (infoSingleton.solist_gewonnen != 1) {
+                    spielwert *= 2;
+                    s += "\nVerloren x-2";
+                }
+                if (infoSingleton.kontra == 1 && infoSingleton.re == 1) {
+                    spielwert *= 4;
+                    s += "\nRe x4";
+                } else if (infoSingleton.kontra == 1) {
+                    spielwert *= 2;
+                    s += "\nKontra x2";
+                }
+                break;
+            // TODO: Add other case (Grand + Farben)
+        }
+
+        TextView tvAuswertung = (TextView) findViewById(R.id.tvAuswertung);
+        tvAuswertung.setText(s);
+        TextView tvGesamt = (TextView) findViewById(R.id.tvGesamt);
+        tvGesamt.setText("Gesamt: " +((infoSingleton.solist_gewonnen==1) ? "" : "-") +spielwert);
     }
 
     @Override
