@@ -1,50 +1,50 @@
 package com.mettwurst.skatdb;
 
-/**
- * Created by Jo on 21.08.2015.
- */
 public class SkatInfoSingleton {
 
-    public static  String datum;
-    public static  String spieler1;
-    public static  String spieler2;
-    public static  String spieler3;
-    public static  String spieler4;
-    public static  String spieler5;
-    public static  int spielerzahl;
-    public static  int geber;
-    public static  int bock;
+    public String datum;
+    public int spielerzahl;
+    public int geber;
+    public int bock;
+    public String spieler1;
+    public String spieler2;
+    public String spieler3;
+    public String spieler4;
+    public String spieler5;
+    public int gesamt_sp1;
+    public int gesamt_sp2;
+    public int gesamt_sp3;
+    public int gesamt_sp4;
+    public int gesamt_sp5;
 
-    public static  String solist;
-    public static  int handspiel;
-    public static  int ouvert;
-    public static  int schneider_angesagt;
-    public static  int schwarz_angesagt;
-    public static  int reizwert;
-    public static  String spiel;
-    public static  int kontra;
-    public static  int re;
+    public String spiel;
 
-    public static  String buben = "";
-    public static  int schneider_gespielt;
-    public static  int schwarz_gespielt;
-    public static  int solist_gewonnen = 1;
-    public static  int punkte_sp1;
-    public static  int punkte_sp2;
-    public static  int punkte_sp3;
-    public static  int punkte_sp4;
-    public static  int punkte_sp5;
-    public static  int gesamt_sp1;
-    public static  int gesamt_sp2;
-    public static  int gesamt_sp3;
-    public static  int gesamt_sp4;
-    public static  int gesamt_sp5;
-    public static  int spielwert;
+    public String solist;
 
-    public static  int bockCount = 0;
+    public int handspiel;
+    public int schneider_angesagt;
+    public int schwarz_angesagt;
+    public int ouvert;
+    public int kontra;
+    public int re;
 
+    public int buben_multiplikator;
 
-    private static SkatInfoSingleton ourInstance = new SkatInfoSingleton();
+    public int solist_gewonnen;
+
+    public int schneider_gespielt;
+    public int schwarz_gespielt;
+
+    public int punkte_sp1;
+    public int punkte_sp2;
+    public int punkte_sp3;
+    public int punkte_sp4;
+    public int punkte_sp5;
+    public int spielwert;
+
+    public int bockCount = 0;
+
+    private static SkatInfoSingleton ourInstance;
 
     public static SkatInfoSingleton getInstance() {
         return ourInstance;
@@ -53,8 +53,24 @@ public class SkatInfoSingleton {
     private SkatInfoSingleton() {
     }
 
-    public void reset() {
+    public static void init(String datum, int spielerzahl, int geber, int bock,
+                     String spieler1, String spieler2, String spieler3, String spieler4, String spieler5,
+                     int gesamt_sp1, int gesamt_sp2, int gesamt_sp3, int gesamt_sp4, int gesamt_sp5) {
         ourInstance = new SkatInfoSingleton();
-        // TODO: Besser init() ???
+
+        ourInstance.datum = datum;
+        ourInstance.spielerzahl = spielerzahl;
+        ourInstance.geber = geber;
+        ourInstance.bock = bock;
+        ourInstance.spieler1 = spieler1;
+        ourInstance.spieler2 = spieler2;
+        ourInstance.spieler3 = spieler3;
+        ourInstance.spieler4 = spieler4;
+        ourInstance.spieler5 = spieler5;
+        ourInstance.gesamt_sp1 = gesamt_sp1;
+        ourInstance.gesamt_sp2 = gesamt_sp2;
+        ourInstance.gesamt_sp3 = gesamt_sp3;
+        ourInstance.gesamt_sp4 = gesamt_sp4;
+        ourInstance.gesamt_sp5 = gesamt_sp5;
     }
 }

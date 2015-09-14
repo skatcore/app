@@ -15,6 +15,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.util.Log;
@@ -40,6 +41,7 @@ public class X2Solist extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(SkatInfoSingleton.getInstance().spiel + ": " +getTitle());
         setupActionBar();
     }
 
@@ -91,10 +93,8 @@ public class X2Solist extends PreferenceActivity {
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                final String solist = String.valueOf(preference.getTitle());
+                SkatInfoSingleton.getInstance().solist = String.valueOf(preference.getTitle());
 
-                // TODO Felder fuellen, Intent starten
-                // this.spiel = spiel;
                 Intent intent = new Intent(getApplicationContext(), X3Ansagen.class);
                 startActivity(intent);
 
@@ -102,14 +102,87 @@ public class X2Solist extends PreferenceActivity {
             }
         };
 
+        final SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+        String[] spieler = getPlayingPlayersInOrder(infoSingleton.geber, infoSingleton.spielerzahl,
+                infoSingleton.spieler1, infoSingleton.spieler2, infoSingleton.spieler3,
+                infoSingleton.spieler4, infoSingleton.spieler5);
+
         Preference preference;
         String[] keys = {"spieler1", "spieler2", "spieler3"};
         for (int i = 0; i < keys.length; i++) {
             preference = findPreference(keys[i]);
-            preference.setTitle(keys[i]); // TODO: Namen lesen
+            preference.setTitle(spieler[i]);
             preference.setOnPreferenceClickListener(listener);
         }
 
 
+    }
+
+    private String[] getPlayingPlayersInOrder(int geber, int spielerzahl, String spieler1, String spieler2, String spieler3, String spieler4, String spieler5) {
+        String[] res = new String[3];
+
+        switch (geber) {
+            case 1:
+                res[0] = spieler2;
+                res[1] = spieler3;
+                res[2] = (spielerzahl >= 4) ?
+                        spieler4 : spieler1;
+                break;
+            case 2:
+                res[0] = spieler3;
+                switch (spielerzahl) {
+                    case 3:
+                        res[1] = spieler1;
+                        res[2] = spieler2;
+                        break;
+                    case 4:
+                        res[1] = spieler4;
+                        res[2] = spieler1;
+                        break;
+                    case 5:
+                        res[1] = spieler4;
+                        res[2] = spieler5;
+                        break;
+                }
+                break;
+            case 3:
+                switch (spielerzahl) {
+                    case 3:
+                        res[0] = spieler1;
+                        res[1] = spieler2;
+                        res[2] = spieler3;
+                        break;
+                    case 4:
+                        res[0] = spieler4;
+                        res[1] = spieler1;
+                        res[2] = spieler2;
+                        break;
+                    case 5:
+                        res[0] = spieler4;
+                        res[1] = spieler5;
+                        res[2] = spieler1;
+                        break;
+                }
+                break;
+            case 4:
+                if (spielerzahl == 4) {
+                    res[0] = spieler1;
+                    res[1] = spieler2;
+                    res[2] = spieler3;
+                } else {
+                    // spielerzahl == 5
+                    res[0] = spieler5;
+                    res[1] = spieler1;
+                    res[2] = spieler2;
+                }
+                break;
+            case 5:
+                res[0] = spieler1;
+                res[1] = spieler2;
+                res[2] = spieler3;
+                break;
+        }
+
+        return res;
     }
 }

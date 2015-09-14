@@ -71,5 +71,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_x7_auswertung">Auswertung</string>
+    <string name="menu_ok">OK</string>
 
 </resources>

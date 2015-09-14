@@ -16,8 +16,10 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -85,24 +87,31 @@ public class X6AuswertungSchneider extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_5_auswertung_ausgang);
+        addPreferencesFromResource(R.xml.pref_6_auswertung_schneider);
 
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
                 switch (String.valueOf(preference.getKey())) {
-                    case "gewonnen":
+                    case "normal":
 
                         break;
-                    case "verloren":
+                    case "schenider":
+
+                        break;
+                    case "schwarz":
 
                         break;
                 }
-                Intent intent = new Intent(getApplicationContext(), null);
+
+                Intent intent = new Intent(getApplicationContext(), X7Auswertung.class);
                 startActivity(intent);
                 return false;
             }
         };
+        findPreference("normal").setOnPreferenceClickListener(listener);
+        findPreference("schneider").setOnPreferenceClickListener(listener);
+        findPreference("schwarz").setOnPreferenceClickListener(listener);
     }
 }

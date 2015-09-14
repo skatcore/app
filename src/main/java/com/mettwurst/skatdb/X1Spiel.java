@@ -95,8 +95,7 @@ public class X1Spiel extends PreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
                 final String spiel = String.valueOf(preference.getTitle());
 
-                // TODO Felder fuellen, Intent starten
-                // this.spiel = spiel;
+                SkatInfoSingleton.getInstance().spiel = spiel;
                 Intent intent = new Intent(getApplicationContext(), X2Solist.class);
                 startActivity(intent);
 

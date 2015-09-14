@@ -71,6 +71,7 @@ public class MainMenuActivity extends Activity {
     public void spielLaden(View view) {
         //Intent intent = new Intent(getApplicationContext(), LoadGameActivity.class);
         // TODO DEBUG
+        SkatInfoSingleton.init("datum_14_09_2015",3,1,0,"Sarah","Jojo","Peter","","",0,0,0,0,0);
         Intent intent = new Intent(getApplicationContext(), X1Spiel.class);
         startActivity(intent);
     }
