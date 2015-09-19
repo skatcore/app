@@ -109,7 +109,7 @@ public class X6AuswertungSchneider extends PreferenceActivity {
                         infoSingleton.schneider_gespielt = 0;
                         infoSingleton.schwarz_gespielt = 0;
                         break;
-                    case "schenider":
+                    case "schneider":
                         infoSingleton.schneider_gespielt = 1;
                         infoSingleton.schwarz_gespielt = 0;
                         break;

@@ -17,6 +17,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
@@ -93,7 +94,7 @@ public class X5AuswertungAusgang extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
-
+                
                 switch (String.valueOf(preference.getKey())) {
                     case "gewonnen":
                         infoSingleton.solist_gewonnen = 1;
