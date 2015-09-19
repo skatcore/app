@@ -87,6 +87,16 @@ public class X6AuswertungSchneider extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
+        SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+        boolean isNullspiel = infoSingleton.spiel.equals("Null");
+        if (isNullspiel) {
+            // Direkt weiter, ohne Schneider
+            infoSingleton.schneider_gespielt = 0;
+            infoSingleton.schwarz_gespielt = 0;
+            Intent intent = new Intent(getApplicationContext(), X7Auswertung.class);
+            startActivity(intent);
+        }
+
         addPreferencesFromResource(R.xml.pref_6_auswertung_schneider);
 
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {

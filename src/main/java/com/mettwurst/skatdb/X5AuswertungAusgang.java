@@ -66,7 +66,9 @@ public class X5AuswertungAusgang extends PreferenceActivity {
             //
             // TODO: If Settings has multiple levels, Up should navigate up
             // that hierarchy.
-            NavUtils.navigateUpFromSameTask(this);
+
+            //NavUtils.navigateUpFromSameTask(this);
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -109,4 +111,19 @@ public class X5AuswertungAusgang extends PreferenceActivity {
         findPreference("gewonnen").setOnPreferenceClickListener(listener);
         findPreference("verloren").setOnPreferenceClickListener(listener);
     }
+
+    @Override
+    public void onBackPressed() {
+        SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+        boolean isNullspiel = infoSingleton.spiel.equals("Null");
+
+        Intent intent;
+        if (isNullspiel) {
+            intent = new Intent(getApplicationContext(), X3Ansagen.class);
+        } else {
+            intent = new Intent(getApplicationContext(), X4AuswertungBuben.class);
+        }
+        startActivity(intent);
+    }
+
 }

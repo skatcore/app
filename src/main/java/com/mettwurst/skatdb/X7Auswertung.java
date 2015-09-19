@@ -1,6 +1,7 @@
 package com.mettwurst.skatdb;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,11 +70,30 @@ public class X7Auswertung extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+        boolean isNullspiel = infoSingleton.spiel.equals("Null");
+
+        Intent intent;
+        if (isNullspiel) {
+            intent = new Intent(getApplicationContext(), X5AuswertungAusgang.class);
+        } else {
+            intent = new Intent(getApplicationContext(), X6AuswertungSchneider.class);
+        }
+        startActivity(intent);
     }
 }

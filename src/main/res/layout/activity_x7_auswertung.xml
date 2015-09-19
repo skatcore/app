@@ -8,13 +8,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/tvAuswertung" />
+        android:id="@+id/tvAuswertung"
+        android:gravity="end" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvGesamt" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/tvGesamt"
+        android:gravity="end" />
 </LinearLayout>

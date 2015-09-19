@@ -73,6 +73,15 @@ public class X4AuswertungBuben extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
+        SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+        boolean isNullspiel = infoSingleton.spiel.equals("Null");
+        if (isNullspiel) {
+            // Direkt weiter, ohne Buben-Info
+            infoSingleton.buben_multiplikator = 0;
+            Intent intent = new Intent(getApplicationContext(), X5AuswertungAusgang.class);
+            startActivity(intent);
+        }
+
         addPreferencesFromResource(R.xml.pref_4_auswertung_buben);
 
         final Preference[] preferences = new Preference[4];
