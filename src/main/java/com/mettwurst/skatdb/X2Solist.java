@@ -93,11 +93,15 @@ public class X2Solist extends PreferenceActivity {
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+                SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
                 String s = String.valueOf(preference.getKey());
                 char c = s.charAt(s.length() - 1);
                 int solist_Relativ = Integer.valueOf(c);
-                int solist_Abs = (solist_Relativ + SkatInfoSingleton.getInstance().geber) & SkatInfoSingleton.getInstance().spielerzahl;
-                SkatInfoSingleton.getInstance().solist = solist_Abs;
+                int solist_Abs = ((solist_Relativ + infoSingleton.geber) % infoSingleton.spielerzahl);
+                if (solist_Abs == 0) {
+                    solist_Abs = infoSingleton.spielerzahl;
+                }
+                infoSingleton.solist = solist_Abs;
 
                 Intent intent = new Intent(getApplicationContext(), X3Ansagen.class);
                 intent.putExtra("vor", true);

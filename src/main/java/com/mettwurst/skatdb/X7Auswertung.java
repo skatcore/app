@@ -8,7 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import javax.security.auth.login.LoginException;
+
 public class X7Auswertung extends Activity {
+
+    private SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+    private int spielerzahl = infoSingleton.spielerzahl;  // Local copy
+    private int geber = infoSingleton.geber;              //
+    int mySolistGewonnen = infoSingleton.solist_gewonnen; //
+    private int spielwert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +26,6 @@ public class X7Auswertung extends Activity {
         String s = "";
 
         SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
-        int mySolistGewonnen = infoSingleton.solist_gewonnen;
-        int spielwert = 0; // TODO DEBUG: Remove init
 
         switch(infoSingleton.spiel) {
             case "Null":
@@ -241,8 +247,30 @@ public class X7Auswertung extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_OK) {
-            // TODO HERE //////////////////////////////////////////
-            // TODO: In Datenbank einfuegen
+            SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+            infoSingleton.spielwert = this.spielwert;
+            infoSingleton.solist_gewonnen = mySolistGewonnen;
+
+            int[] punkteSpieler = distributePointsToPlayers();
+            infoSingleton.punkte_sp1 = punkteSpieler[0];
+            infoSingleton.gesamt_sp1 += punkteSpieler[0];
+            infoSingleton.punkte_sp2 = punkteSpieler[1];
+            infoSingleton.gesamt_sp2 += punkteSpieler[1];
+            infoSingleton.punkte_sp3 = punkteSpieler[2];
+            infoSingleton.gesamt_sp3 += punkteSpieler[2];
+            infoSingleton.punkte_sp4 = punkteSpieler[3];
+            infoSingleton.gesamt_sp4 += punkteSpieler[3];
+            infoSingleton.punkte_sp5 = punkteSpieler[4];
+            infoSingleton.gesamt_sp5 += punkteSpieler[4];
+
+            DBController dbCon = new DBController(this);
+            dbCon.open();
+            dbCon.insert(infoSingleton);
+            dbCon.close();
+
+            Intent main = new Intent(X7Auswertung.this, SkatListActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            main.putExtra("intentFlag", SkatListActivity.INTENT_FLAG_RUNDE_EINGETRAGEN);
+            startActivity(main);
             return true;
         }
 
@@ -261,5 +289,70 @@ public class X7Auswertung extends Activity {
             intent = new Intent(getApplicationContext(), X6AuswertungSchneider.class);
         }
         startActivity(intent);
+    }
+
+    private int[] distributePointsToPlayers() {
+        int solist = infoSingleton.solist;
+        int solist_gewonnen = infoSingleton.solist_gewonnen;
+        int[] res = new int[5];
+
+        res[0] = (isPlayingSp1() &&
+                (       ((solist == 1) && !(solist_gewonnen > 0)) ||  // Solist but lost game
+                        (!(solist == 1) && (solist_gewonnen > 0))     // Not solist but solist won
+                )) ? spielwert : 0;
+        res[1] = (isPlayingSp2() &&
+                (       ((solist == 2) && !(solist_gewonnen > 0)) ||
+                        (!(solist == 2) && (solist_gewonnen > 0))
+                )) ? spielwert : 0;
+        res[2] = (isPlayingSp3() &&
+                (       ((solist ==3) && !(solist_gewonnen > 0)) ||
+                        (!(solist == 3) && (solist_gewonnen > 0))
+                )) ? spielwert : 0;
+        res[3] = (isPlayingSp4() &&
+                (       ((solist == 4) && !(solist_gewonnen > 0)) ||
+                        (!(solist == 4) && (solist_gewonnen > 0))
+                )) ? spielwert : 0;
+        res[4] = (isPlayingSp5() &&
+                (       ((solist == 5) && !(solist_gewonnen > 0)) ||
+                        (!(solist == 5) && (solist_gewonnen > 0))
+                )) ? spielwert : 0;
+
+        return res;
+    }
+
+    private boolean isPlayingSp1() {
+        return
+                (spielerzahl == 3) ||
+                        (spielerzahl == 4 && geber != 1) ||
+                        (spielerzahl == 5 && geber != 1 && geber != 2)
+                ;
+    }
+
+    private boolean isPlayingSp2() {
+        return
+                (spielerzahl == 3) ||
+                        (spielerzahl == 4 && geber != 2) ||
+                        (spielerzahl == 5 && geber != 2 && geber != 3)
+                ;
+    }
+
+    private boolean isPlayingSp3() {
+        return
+                (spielerzahl == 3) ||
+                        (spielerzahl == 4 && geber != 3) ||
+                        (spielerzahl == 5 && geber != 3 && geber != 4)
+                ;
+    }
+
+    private boolean isPlayingSp4() {
+        return
+                (spielerzahl == 4 && geber != 4) ||
+                        (spielerzahl == 5 && geber != 4 && geber != 5)
+                ;
+    }
+
+    private boolean isPlayingSp5() {
+        return
+                (spielerzahl == 5 && geber != 5 && geber != 1);
     }
 }

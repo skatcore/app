@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -150,6 +151,7 @@ public class SkatListActivity extends android.app.Activity {
                 }
                 break;
             case INTENT_FLAG_DEFAULT:
+                // Keine neue Runde, daher Geber nicht aendern.
                 break;
         }
 
@@ -174,6 +176,8 @@ public class SkatListActivity extends android.app.Activity {
 
         updateListViewAndAdapter();
 
+        // TODO
+        /*
         // OnCLickListener For List Items
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -194,6 +198,7 @@ public class SkatListActivity extends android.app.Activity {
                 }
             }
         });
+        */
     }
 
 
