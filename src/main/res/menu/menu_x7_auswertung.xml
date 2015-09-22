@@ -1,6 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mettwurst.skatdb.X7Auswertung">
-    <item android:id="@+id/action_settings" android:title="@string/menu_ok"
-        android:orderInCategory="100" android:showAsAction="always" />
+
+    <item android:id="@+id/action_OK"
+        android:title="@string/menu_ok"
+        android:orderInCategory="100"
+        android:showAsAction="always" />
 </menu>

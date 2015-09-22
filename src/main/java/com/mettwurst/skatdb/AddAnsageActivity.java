@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 
 public class AddAnsageActivity extends Activity{
+    /*
     private String datum;
     private String spieler1;
     private String spieler2;
@@ -435,4 +436,5 @@ public class AddAnsageActivity extends Activity{
             radioGroup.setVisibility(View.VISIBLE);
         }
     }
+*/
 }

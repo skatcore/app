@@ -8,11 +8,13 @@
         android:title="@string/menuAddSkatspiel"
         android:showAsAction="always"/>
 
+    <!--
     <item
         android:id="@+id/menuDeleteLastRound"
         android:orderInCategory="100"
         android:title="@string/menuDeleteLastRound"
         android:showAsAction="never"/>
+        -->
 
     <item
         android:id="@+id/menuExport"

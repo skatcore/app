@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 
 public class AddSkatrundeActivity extends ActivityWithSkatinfo {
-
+/*
     private DBController dbCon;
     private CheckBox cbSchwarzGespielt;
     private int ramschVerliererCount = 1;
@@ -720,4 +720,5 @@ public class AddSkatrundeActivity extends ActivityWithSkatinfo {
         }
         return res;
     }
+    */
 }

@@ -3,6 +3,7 @@ package com.mettwurst.skatdb;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -239,7 +240,9 @@ public class X7Auswertung extends Activity {
         }
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_OK) {
+            // TODO HERE //////////////////////////////////////////
+            // TODO: In Datenbank einfuegen
             return true;
         }
 

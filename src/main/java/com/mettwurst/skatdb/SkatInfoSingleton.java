@@ -5,21 +5,15 @@ public class SkatInfoSingleton {
     public String datum;
     public int spielerzahl;
     public int geber;
-    public int bock;
     public String spieler1;
     public String spieler2;
     public String spieler3;
     public String spieler4;
     public String spieler5;
-    public int gesamt_sp1;
-    public int gesamt_sp2;
-    public int gesamt_sp3;
-    public int gesamt_sp4;
-    public int gesamt_sp5;
 
     public String spiel;
 
-    public String solist;
+    public int solist;
 
     public int handspiel;
     public int schneider_angesagt;
@@ -35,6 +29,11 @@ public class SkatInfoSingleton {
     public int schneider_gespielt;
     public int schwarz_gespielt;
 
+    public int gesamt_sp1;
+    public int gesamt_sp2;
+    public int gesamt_sp3;
+    public int gesamt_sp4;
+    public int gesamt_sp5;
     public int punkte_sp1;
     public int punkte_sp2;
     public int punkte_sp3;
@@ -42,7 +41,8 @@ public class SkatInfoSingleton {
     public int punkte_sp5;
     public int spielwert;
 
-    public int bockCount = 0;
+    public int bockCount;
+    public int isBock;
 
     private static SkatInfoSingleton ourInstance;
 
@@ -53,15 +53,15 @@ public class SkatInfoSingleton {
     private SkatInfoSingleton() {
     }
 
-    public static void init(String datum, int spielerzahl, int geber, int bock,
-                     String spieler1, String spieler2, String spieler3, String spieler4, String spieler5,
-                     int gesamt_sp1, int gesamt_sp2, int gesamt_sp3, int gesamt_sp4, int gesamt_sp5) {
+    public static void init(String datum, int spielerzahl, int geber, String spieler1,
+                            String spieler2, String spieler3, String spieler4, String spieler5,
+                            int gesamt_sp1, int gesamt_sp2, int gesamt_sp3, int gesamt_sp4,
+                            int gesamt_sp5, int bockCount) {
         ourInstance = new SkatInfoSingleton();
 
         ourInstance.datum = datum;
         ourInstance.spielerzahl = spielerzahl;
         ourInstance.geber = geber;
-        ourInstance.bock = bock;
         ourInstance.spieler1 = spieler1;
         ourInstance.spieler2 = spieler2;
         ourInstance.spieler3 = spieler3;
@@ -72,5 +72,7 @@ public class SkatInfoSingleton {
         ourInstance.gesamt_sp3 = gesamt_sp3;
         ourInstance.gesamt_sp4 = gesamt_sp4;
         ourInstance.gesamt_sp5 = gesamt_sp5;
+        ourInstance.bockCount = bockCount;
+        ourInstance.isBock = (bockCount > 0) ? 1 : 0;
     }
 }

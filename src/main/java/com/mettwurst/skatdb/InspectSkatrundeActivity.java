@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 
 public class InspectSkatrundeActivity extends ActivityWithSkatinfo {
+    /*
     public long _id;
 
     private ArrayList<ListItem> arrayList;
@@ -272,4 +273,5 @@ public class InspectSkatrundeActivity extends ActivityWithSkatinfo {
         gesamt_sp5          = Integer.valueOf(arrayList.get(37).stringValue);
         spielwert           = Integer.valueOf(arrayList.get(38).stringValue);
     }
+    */
 }

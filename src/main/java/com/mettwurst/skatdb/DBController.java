@@ -28,8 +28,8 @@ public class DBController {
 	}
 
     // Reads all needed fields from AddSkatspielActitivy
-    public long insert(ActivityWithSkatinfo a) {
-        return insertOrUpdate(-1, a);
+    public long insert(SkatInfoSingleton s) {
+        return insertOrUpdate(-1, s);
     }
 
     public Cursor fetch() {
@@ -60,8 +60,8 @@ public class DBController {
         return cursor;
     }
 
-    public int update(long _id, ActivityWithSkatinfo a) {
-        return (int) insertOrUpdate(_id, a);
+    public int update(long _id, SkatInfoSingleton s) {
+        return (int) insertOrUpdate(_id, s);
     }
 	
 	public void delete(long _id) {
@@ -81,51 +81,50 @@ public class DBController {
         }
     }
 
-    private long insertOrUpdate(long _id, ActivityWithSkatinfo a) {
+    private long insertOrUpdate(long _id, SkatInfoSingleton s) {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(Entry.COL_DATUM, a.datum);
-        values.put(Entry.COL_SPIELER1, a.spieler1);
-        values.put(Entry.COL_SPIELER2, a.spieler2);
-        values.put(Entry.COL_SPIELER3, a.spieler3);
-        values.put(Entry.COL_SPIELER4, a.spieler4);
-        values.put(Entry.COL_SPIELER5, a.spieler5);
-        values.put(Entry.COL_SPIELERZAHL, a.spielerzahl);
-        values.put(Entry.COL_GEBER, a.geber);
-        values.put(Entry.COL_SOLIST, a.solist);
-        values.put(Entry.COL_BUBEN, a.buben);
-        values.put(Entry.COL_HANDSPIEL, a.handspiel);
-        values.put(Entry.COL_OUVERT, a.ouvert);
-        values.put(Entry.COL_SCHNEIDER_ANGESAGT, a.schneider_angesagt);
-        values.put(Entry.COL_SCHWARZ_ANGESAGT, a.schwarz_angesagt);
-        values.put(Entry.COL_REIZWERT, a.reizwert);
-        values.put(Entry.COL_SPIEL, a.spiel);
-        values.put(Entry.COL_SCHNEIDER_GESPIELT, a.schneider_gespielt);
-        values.put(Entry.COL_SCHWARZ_GESPIELT, a.schwarz_gespielt);
-        values.put(Entry.COL_PUNKTE_RE, a.punkte_re);
-        values.put(Entry.COL_SOLIST_GEWONNEN, a.solist_gewonnen);
-        values.put(Entry.COL_KONTRA, a.kontra);
-        values.put(Entry.COL_RE, a.re);
-        values.put(Entry.COL_BOCK, a.bock);
-        values.put(Entry.COL_PUNKTE_SP1, a.punkte_sp1);
-        values.put(Entry.COL_PUNKTE_SP2, a.punkte_sp2);
-        values.put(Entry.COL_PUNKTE_SP3, a.punkte_sp3);
-        values.put(Entry.COL_PUNKTE_SP4, a.punkte_sp4);
-        values.put(Entry.COL_PUNKTE_SP5, a.punkte_sp5);
-        values.put(Entry.COL_GESAMT_SP1, a.gesamt_sp1);
-        values.put(Entry.COL_GESAMT_SP2, a.gesamt_sp2);
-        values.put(Entry.COL_GESAMT_SP3, a.gesamt_sp3);
-        values.put(Entry.COL_GESAMT_SP4, a.gesamt_sp4);
-        values.put(Entry.COL_GESAMT_SP5, a.gesamt_sp5);
-        values.put(Entry.COL_JUNGFRAU_ANGESAGT1, a.jungfrau_angesagt1);
-        values.put(Entry.COL_JUNGFRAU_ANGESAGT2, a.jungfrau_angesagt2);
-        values.put(Entry.COL_JUNGFRAU_ANGESAGT3, a.jungfrau_angesagt3);
-        values.put(Entry.COL_JUNGFRAU_ANGESAGT4, a.jungfrau_angesagt4);
-        values.put(Entry.COL_JUNGFRAU_ANGESAGT5, a.jungfrau_angesagt5);
-        values.put(Entry.COL_SPIELWERT, a.spielwert);
-        values.put(Entry.COL_BOCK_RAMSCH_STATUS, a.bockRamschStatus);
-        values.put(Entry.COL_BOCK_COUNT, a.bockCount);
-        values.put(Entry.COL_RAMSCH_COUNT, a.ramschCount);
+        values.put(Entry.COL_DATUM, s.datum);
+        values.put(Entry.COL_SPIELERZAHL, s.spielerzahl);
+        values.put(Entry.COL_GEBER, s.geber);
+        values.put(Entry.COL_SPIELER1, s.spieler1);
+        values.put(Entry.COL_SPIELER2, s.spieler2);
+        values.put(Entry.COL_SPIELER3, s.spieler3);
+        values.put(Entry.COL_SPIELER4, s.spieler4);
+        values.put(Entry.COL_SPIELER5, s.spieler5);
+
+        values.put(Entry.COL_SPIEL, s.spiel);
+
+        values.put(Entry.COL_SOLIST, s.solist);
+
+        values.put(Entry.COL_HANDSPIEL, s.handspiel);
+        values.put(Entry.COL_SCHNEIDER_ANGESAGT, s.schneider_angesagt);
+        values.put(Entry.COL_SCHWARZ_ANGESAGT, s.schwarz_angesagt);
+        values.put(Entry.COL_OUVERT, s.ouvert);
+        values.put(Entry.COL_KONTRA, s.kontra);
+        values.put(Entry.COL_RE, s.re);
+
+        values.put(Entry.COL_BUBEN_MULTIPLIKATOR, s.buben_multiplikator);
+
+        values.put(Entry.COL_SOLIST_GEWONNEN, s.solist_gewonnen);
+
+        values.put(Entry.COL_SCHNEIDER_GESPIELT, s.schneider_gespielt);
+        values.put(Entry.COL_SCHWARZ_GESPIELT, s.schwarz_gespielt);
+
+        values.put(Entry.COL_GESAMT_SP1, s.gesamt_sp1);
+        values.put(Entry.COL_GESAMT_SP2, s.gesamt_sp2);
+        values.put(Entry.COL_GESAMT_SP3, s.gesamt_sp3);
+        values.put(Entry.COL_GESAMT_SP4, s.gesamt_sp4);
+        values.put(Entry.COL_GESAMT_SP5, s.gesamt_sp5);
+        values.put(Entry.COL_PUNKTE_SP1, s.punkte_sp1);
+        values.put(Entry.COL_PUNKTE_SP2, s.punkte_sp2);
+        values.put(Entry.COL_PUNKTE_SP3, s.punkte_sp3);
+        values.put(Entry.COL_PUNKTE_SP4, s.punkte_sp4);
+        values.put(Entry.COL_PUNKTE_SP5, s.punkte_sp5);
+        values.put(Entry.COL_SPIELWERT, s.spielwert);
+
+        values.put(Entry.COL_BOCK_COUNT, s.bockCount);
+        values.put(Entry.COL_BOCK, s.isBock);
 
         if (_id == -1) {
             return database.insert(Entry.TABLE_NAME, Entry.NULL_COLUMN_HACK, values);

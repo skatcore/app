@@ -94,7 +94,7 @@ public class X5AuswertungAusgang extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
-                
+
                 switch (String.valueOf(preference.getKey())) {
                     case "gewonnen":
                         infoSingleton.solist_gewonnen = 1;

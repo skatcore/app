@@ -1,7 +1,5 @@
 package com.mettwurst.skatdb;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,7 +14,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SkatListActivity extends ActivityWithSkatinfo {
+public class SkatListActivity extends android.app.Activity {
     private static String datum;
     private static String spieler1;
     private static String spieler2;
@@ -34,13 +32,9 @@ public class SkatListActivity extends ActivityWithSkatinfo {
     private DBController dbCon;
     private ListView listView;
 
-    private static int bockRamschStatus; // 0: Normal, 1: Bock, 2: Ramsch
     private static int bockCount;
-    private static int ramschCount;
 
-    private static int oldBockRamschStatus = 0;
-    private static int oldBockCount = 0;
-    private static int oldRamschCount = 0;
+    //private static int oldBockCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +57,7 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                 spieler5 = intent.getStringExtra("spieler5");
                 spielerzahl = intent.getIntExtra("spielerzahl", -1);
                 geber = 1;
-                bockRamschStatus = 0;
                 bockCount = 0;
-                ramschCount = 0;
 
                 DBSpielController dbSpielCon = new DBSpielController(this);
                 dbSpielCon.open();
@@ -74,12 +66,11 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                 setLastPlayedRound(datum);
                 break;
             case INTENT_FLAG_RUNDE_EINGETRAGEN:
-                oldBockCount = bockCount; // Backup for last round deletion
-                oldBockRamschStatus = bockRamschStatus;
-                oldRamschCount = ramschCount;
+                //oldBockCount = bockCount; // Backup for last round deletion
 
-                boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
-                boolean warRamsch = intent.getBooleanExtra("warRamsch", false);
+                //boolean bockUndRamsch = intent.getBooleanExtra("bockUndRamsch", false);
+                //boolean warRamsch = intent.getBooleanExtra("warRamsch", false);
+                /*
                 switch (bockRamschStatus) {
                     case 0:
                         if (bockUndRamsch) {
@@ -104,7 +95,12 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                         }
                         geber -= 1; // Grand Hand anstelle von Ramsch
                         break;
+                }*/
+
+                if (bockCount > 0) {
+                    bockCount -= 1;
                 }
+
                 geber = (geber % spielerzahl) + 1;
                 break;
             case INTENT_FLAG_SPIEL_FORTSETZEN:
@@ -122,9 +118,7 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                     if (spieler5 == null) spieler5 = "";
                     geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
                     geber = (geber % spielerzahl) + 1;
-                    bockRamschStatus = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_RAMSCH_STATUS));
                     bockCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT));
-                    ramschCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_RAMSCH_COUNT));
                     setLastPlayedRound(datum);
                 } catch (Exception e) {
                     String spielerstring = intent.getStringExtra("spieler");
@@ -150,9 +144,7 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                             spieler5 = "";
                         }
                         geber = 1;
-                        bockRamschStatus = 0;
                         bockCount = 0;
-                        ramschCount = 0;
                         setLastPlayedRound(datum);
                     }
                 }
@@ -219,6 +211,22 @@ public class SkatListActivity extends ActivityWithSkatinfo {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.menuAdd) {
+
+            Cursor cursor = dbCon.fetchForDate(datum);
+            cursor.moveToLast();
+            int gesamt_sp1 = readIntOrZero(cursor, DBContract.Entry.COL_GESAMT_SP1);
+            int gesamt_sp2 = readIntOrZero(cursor, DBContract.Entry.COL_GESAMT_SP2);
+            int gesamt_sp3 = readIntOrZero(cursor, DBContract.Entry.COL_GESAMT_SP3);
+            int gesamt_sp4 = readIntOrZero(cursor, DBContract.Entry.COL_GESAMT_SP4);
+            int gesamt_sp5 = readIntOrZero(cursor, DBContract.Entry.COL_GESAMT_SP5);
+
+            SkatInfoSingleton.init(datum, spielerzahl, geber, spieler1, spieler2, spieler3,
+                    spieler4, spieler5, gesamt_sp1, gesamt_sp2, gesamt_sp3, gesamt_sp4, gesamt_sp5,
+                    bockCount);
+            Intent intent = new Intent(getApplicationContext(), X1Spiel.class);
+            startActivity(intent);
+
+            /*
             Intent intent = new Intent(getApplicationContext(), AddAnsageActivity.class);
             intent.putExtra("datum",datum);
             intent.putExtra("spieler1",spieler1);
@@ -246,7 +254,9 @@ public class SkatListActivity extends ActivityWithSkatinfo {
             intent.putExtra("gesamt_sp5", gesamt_sp5);
 
             startActivity(intent);
-        } else if (id == R.id.menuDeleteLastRound) {
+            */
+
+        /*} else if (id == R.id.menuDeleteLastRound) {
             if (listView.getCount() == 0) {
                 Toast.makeText(getApplication(), "Noch keine Runde eingetragen.", Toast.LENGTH_SHORT).show();
             } else {
@@ -271,7 +281,7 @@ public class SkatListActivity extends ActivityWithSkatinfo {
                         })
                         .setNegativeButton("Nein", null) //Do nothing on no
                         .show();
-            }
+            }*/
         } else if (id == R.id.menuExport) {
             final Cursor cursor = dbCon.fetchForDate(datum);
             new Thread(new Task(cursor, datum)).start();
