@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String COMMA_SEP   = ", ";        // Comma separator to use.
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " +Entry.TABLE_NAME +" (" +
+            "CREATE TABLE IF NOT EXISTS " +Entry.TABLE_NAME +" (" +
                     Entry._ID 				            +" INTEGER PRIMARY KEY" 	+COMMA_SEP +
                     Entry.COL_DATUM     	            + " DATETIME"  				+COMMA_SEP +
                     Entry.COL_SPIELERZAHL    	        +INT_TYPE 					+COMMA_SEP +
@@ -85,5 +85,10 @@ public class DBHelper extends SQLiteOpenHelper {
 	
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        this.onCreate(db);
     }
 }

@@ -12,7 +12,7 @@ public class DBSpielHelper extends SQLiteOpenHelper {
 	private static final String COMMA_SEP   = ", ";        // Comma separator to use.
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + DBSpielContract.Entry.TABLE_NAME +" (" +
+            "CREATE TABLE IF NOT EXISTS " + DBSpielContract.Entry.TABLE_NAME +" (" +
                     Entry._ID 				            +" INTEGER PRIMARY KEY" 	+COMMA_SEP +
                     Entry.COL_DATUM     	            + " DATETIME"  				+COMMA_SEP +
                     Entry.COL_SPIELER    	            +TEXT_TYPE +
@@ -45,4 +45,9 @@ public class DBSpielHelper extends SQLiteOpenHelper {
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
+	@Override
+	public void onOpen(SQLiteDatabase db) {
+		this.onCreate(db);
+	}
 }

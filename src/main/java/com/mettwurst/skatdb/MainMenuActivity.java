@@ -56,8 +56,6 @@ public class MainMenuActivity extends Activity {
     }
 
     public void spielFortsetzen(View view) {
-        Toast.makeText(getApplicationContext(), "In Arbeit...", Toast.LENGTH_SHORT).show();
-        /*
         SharedPreferences prefs = getSharedPreferences("skatPrefs", MODE_PRIVATE);
         String datum = prefs.getString("lastRound", null);
         if (datum == null) {
@@ -68,16 +66,11 @@ public class MainMenuActivity extends Activity {
             intent.putExtra("datum", datum);
             startActivity(intent);
         }
-        */
     }
 
     public void spielLaden(View view) {
-        //Intent intent = new Intent(getApplicationContext(), LoadGameActivity.class);
-        //startActivity(intent);
-        //SkatInfoSingleton.init("",3,1,"Luke","Jojo","Till","","",0,0,0,0,0,0);
-        //Intent intent = new Intent(getApplicationContext(), X1Spiel.class);
-        //startActivity(intent);
-        Toast.makeText(getApplicationContext(), "In Arbeit...", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), LoadGameActivity.class);
+        startActivity(intent);
     }
 
     private void calculateStats() {
