@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="48sp"
+    android:paddingBottom="4sp"
     android:paddingLeft="4sp"
     android:paddingRight="4sp"
     android:paddingTop="4sp"
@@ -66,7 +66,8 @@
         android:dividerHeight="1sp"
         android:padding="10sp"
         android:layout_below="@+id/llPlayernames"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/tvBockCount" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,4 +77,32 @@
         android:layout_below="@+id/listView"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:id="@+id/btRemoveBock"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="removeBock"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+++"
+        android:id="@+id/btAddBoecke"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/btRemoveBock"
+        android:onClick="addBoecke"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvBockCount"
+        android:layout_above="@id/btRemoveBock"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@id/btAddBoecke"/>
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -176,6 +177,17 @@ public class SkatListActivity extends android.app.Activity {
 
         updateListViewAndAdapter();
 
+        updateBockCount();
+
+        Button btRemoveBock = (Button) findViewById(R.id.btRemoveBock);
+        btRemoveBock.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                removeAllBoecke();
+                return false;
+            }
+        });
+
         // TODO
         /*
         // OnCLickListener For List Items
@@ -199,6 +211,15 @@ public class SkatListActivity extends android.app.Activity {
             }
         });
         */
+    }
+
+    private void updateBockCount() {
+        TextView tvBockCount = (TextView) findViewById(R.id.tvBockCount);
+        if (bockCount == 0) {
+            tvBockCount.setText("Kein Bock");
+        } else {
+            tvBockCount.setText("" +bockCount +"xBock");
+        }
     }
 
 
@@ -344,5 +365,22 @@ public class SkatListActivity extends android.app.Activity {
         SharedPreferences.Editor editor = getSharedPreferences("skatPrefs", MODE_PRIVATE).edit();
         editor.putString("lastRound", date);
         editor.apply();
+    }
+
+    public void addBoecke(View view) {
+        bockCount += spielerzahl;
+        updateBockCount();
+    }
+
+    public void removeBock(View view) {
+        if (bockCount > 0) {
+            bockCount -= 1;
+            updateBockCount();
+        }
+    }
+
+    public void removeAllBoecke() {
+        bockCount = 0;
+        updateBockCount();
     }
 }

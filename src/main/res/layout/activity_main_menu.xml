@@ -15,7 +15,7 @@
         android:layout_weight="1">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/btnSpielFortsetzen"
             android:id="@+id/btnSpielFortsetzen"
@@ -23,7 +23,7 @@
             android:onClick="spielFortsetzen" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/btnNeuesSpiel"
             android:id="@+id/btnNeuesSpiel"
@@ -31,7 +31,7 @@
             android:onClick="neuesSpiel"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/btnSpielLaden"
             android:id="@+id/btnSpielLaden"
