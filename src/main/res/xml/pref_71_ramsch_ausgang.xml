@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:title="1 Verlierer"
+        android:key="1verlierer"></Preference>
+    <Preference
+        android:title="2 Verlierer"
+        android:key="2verlierer"></Preference>
+    <Preference
+        android:title="Durchmarsch"
+        android:key="durchmarsch"></Preference>
+
+</PreferenceScreen>

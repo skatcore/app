@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference android:title="1x"
+        android:key="1"></Preference>
+    <Preference android:title="2x"
+        android:key="2"></Preference>
+    <Preference android:title="3x"
+        android:key="3"></Preference>
+    <Preference android:title="4x"
+        android:key="4"></Preference>
+
+</PreferenceScreen>

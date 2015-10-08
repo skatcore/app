@@ -46,14 +46,6 @@ public class X7Auswertung extends Activity {
                     spielwert *= 2;
                     s += "\nVerloren x-2";
                 }
-                if (infoSingleton.kontra == 1 && infoSingleton.re == 1) {
-                    spielwert *= 4;
-                    s += "\nRe x4";
-                } else if (infoSingleton.kontra == 1) {
-                    spielwert *= 2;
-                    s += "\nKontra x2";
-                }
-                // TODO: Daten in Singleton eintragen
                 break;
 
             default:
@@ -218,6 +210,19 @@ public class X7Auswertung extends Activity {
                     }
                 }
                 spielwert *= multiplikator;
+        }
+
+        if (infoSingleton.kontra == 1 && infoSingleton.re == 1) {
+            spielwert *= 4;
+            s += "\nRe x4";
+        } else if (infoSingleton.kontra == 1) {
+            spielwert *= 2;
+            s += "\nKontra x2";
+        }
+
+        if (infoSingleton.isBock == 1) {
+            s += "\nBock x2";
+            spielwert *= 2;
         }
 
         TextView tvAuswertung = (TextView) findViewById(R.id.tvAuswertung);

@@ -137,12 +137,36 @@
                 android:value="com.mettwurst.skatdb.X6AuswertungSchneider" />
         </activity>
         <activity
-            android:name=".X7AuswertungRamsch"
-            android:label="@string/title_activity_x7_auswertung_ramsch"
+            android:name=".X71RamschAusgang"
+            android:label="@string/title_activity_x71_ramsch_ausgang"
             android:parentActivityName=".X1Spiel" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mettwurst.skatdb.X1Spiel" />
+        </activity>
+        <activity
+            android:name=".X72RamschVerliererGewinner"
+            android:label="@string/title_activity_x72_ramsch_verlierer_gewinner"
+            android:parentActivityName=".X71RamschAusgang" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.X71RamschAusgang" />
+        </activity>
+        <activity
+            android:name=".X73RamschMultiplikator"
+            android:label="@string/title_activity_x73_ramsch_multiplikator"
+            android:parentActivityName=".X72RamschVerliererGewinner" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.X72RamschVerliererGewinner" />
+        </activity>
+        <activity
+            android:name=".X74RamschAuswertung"
+            android:label="@string/title_activity_x74_ramsch_auswertung"
+            android:parentActivityName=".X73RamschMultiplikator" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mettwurst.skatdb.X73RamschMultiplikator" />
         </activity>
     </application>
 

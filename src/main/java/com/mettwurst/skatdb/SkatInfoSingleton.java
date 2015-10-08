@@ -44,6 +44,15 @@ public class SkatInfoSingleton {
     public int bockCount;
     public int isBock;
 
+    // Ramsch-Infos werden nicht permanent in DB gespeichert
+    public static final int RAMSCH_1_VERLIERER = 1;
+    public static final int RAMSCH_2_VERLIERER = 2;
+    public static final int RAMSCH_DURCHMARSCH = 3;
+    public int ramschAusgang;
+    public int ramschSolist;
+    public int ramschMultiplikator;
+
+
     private static SkatInfoSingleton ourInstance;
 
     public static SkatInfoSingleton getInstance() {
@@ -74,5 +83,73 @@ public class SkatInfoSingleton {
         ourInstance.gesamt_sp5 = gesamt_sp5;
         ourInstance.bockCount = bockCount;
         ourInstance.isBock = (bockCount > 0) ? 1 : 0;
+    }
+
+    public String[] getPlayingPlayersInOrder() {
+        String[] res = new String[3];
+
+        switch (geber) {
+            case 1:
+                res[0] = spieler2;
+                res[1] = spieler3;
+                res[2] = (spielerzahl >= 4) ?
+                        spieler4 : spieler1;
+                break;
+            case 2:
+                res[0] = spieler3;
+                switch (spielerzahl) {
+                    case 3:
+                        res[1] = spieler1;
+                        res[2] = spieler2;
+                        break;
+                    case 4:
+                        res[1] = spieler4;
+                        res[2] = spieler1;
+                        break;
+                    case 5:
+                        res[1] = spieler4;
+                        res[2] = spieler5;
+                        break;
+                }
+                break;
+            case 3:
+                switch (spielerzahl) {
+                    case 3:
+                        res[0] = spieler1;
+                        res[1] = spieler2;
+                        res[2] = spieler3;
+                        break;
+                    case 4:
+                        res[0] = spieler4;
+                        res[1] = spieler1;
+                        res[2] = spieler2;
+                        break;
+                    case 5:
+                        res[0] = spieler4;
+                        res[1] = spieler5;
+                        res[2] = spieler1;
+                        break;
+                }
+                break;
+            case 4:
+                if (spielerzahl == 4) {
+                    res[0] = spieler1;
+                    res[1] = spieler2;
+                    res[2] = spieler3;
+                } else {
+                    // spielerzahl == 5
+                    res[0] = spieler5;
+                    res[1] = spieler1;
+                    res[2] = spieler2;
+                }
+                break;
+            case 5:
+                res[0] = spieler1;
+                res[1] = spieler2;
+                res[2] = spieler3;
+                break;
+        }
+
+        return res;
     }
 }

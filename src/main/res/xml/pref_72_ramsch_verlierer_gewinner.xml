@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference android:title=""
+        android:key="spieler1"></Preference>
+    <Preference android:title=""
+        android:key="spieler2"></Preference>
+    <Preference android:title=""
+        android:key="spieler3"></Preference>
+
+</PreferenceScreen>

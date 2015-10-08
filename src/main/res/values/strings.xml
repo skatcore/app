@@ -72,6 +72,13 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_x7_auswertung">Auswertung</string>
     <string name="menu_ok">OK</string>
-    <string name="title_activity_x7_auswertung_ramsch">Auswertung Ramsch</string>
+
+
+    <string name="title_activity_x71_ramsch_ausgang">Ausgang</string>
+    <string name="title_activity_x72_ramsch_verlierer_gewinner">Titel</string>
+    <string name="title_activity_x73_ramsch_multiplikator">Multiplikator</string>
+    <string name="title_activity_x74_ramsch_auswertung">Auswertung Ramsch</string>
+
+
 
 </resources>

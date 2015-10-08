@@ -2,7 +2,6 @@ package com.mettwurst.skatdb;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -18,13 +17,11 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-import android.view.View;
-
 
 import java.util.List;
+
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -37,7 +34,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class X1Spiel extends PreferenceActivity {
+public class X71RamschAusgang extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,37 +85,37 @@ public class X1Spiel extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_1_spiel);
+        addPreferencesFromResource(R.xml.pref_71_ramsch_ausgang);
 
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                final String spiel = String.valueOf(preference.getTitle());
+                SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+                final String key = String.valueOf(preference.getKey());
+                switch(key) {
+                    case "1verlierer":
+                        infoSingleton.ramschAusgang = SkatInfoSingleton.RAMSCH_1_VERLIERER;
+                        break;
+                    case "2verlierer":
+                        infoSingleton.ramschAusgang = SkatInfoSingleton.RAMSCH_2_VERLIERER;
+                        break;
+                    case "durchmarsch":
+                        infoSingleton.ramschAusgang = SkatInfoSingleton.RAMSCH_DURCHMARSCH;
+                        break;
+                }
 
-                SkatInfoSingleton.getInstance().spiel = spiel;
-                Intent intent = new Intent(getApplicationContext(), X2Solist.class);
+                Intent intent = new Intent(getApplicationContext(), X72RamschVerliererGewinner.class);
                 startActivity(intent);
 
                 return false;
             }
         };
 
-        String[] names = {"Grand", "Null", "Kreuz", "Pik", "Herz", "Karo"};
+        String[] names = {"1verlierer", "2verlierer", "durchmarsch"};
         Preference preference;
         for (int i = 0; i < names.length; i++) {
             preference = findPreference(names[i]);
             preference.setOnPreferenceClickListener(listener);
         }
-
-        preference = findPreference("Ramsch");
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                SkatInfoSingleton.getInstance().spiel = "Ramsch";
-                Intent intent = new Intent(getApplicationContext(), X71RamschAusgang.class);
-                startActivity(intent);
-                return false;
-            }
-        });
     }
 }

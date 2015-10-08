@@ -2,7 +2,6 @@ package com.mettwurst.skatdb;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Ringtone;
@@ -18,13 +17,11 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-import android.view.View;
-
 
 import java.util.List;
+
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -37,11 +34,17 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class X1Spiel extends PreferenceActivity {
+public class X72RamschVerliererGewinner extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int ramschAusgang = SkatInfoSingleton.getInstance().ramschAusgang;
+        if (ramschAusgang == SkatInfoSingleton.RAMSCH_1_VERLIERER) {
+            setTitle("Verlierer auswählen");
+        } else {
+            setTitle("Gewinner auswählen");
+        }
         setupActionBar();
     }
 
@@ -88,37 +91,42 @@ public class X1Spiel extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        addPreferencesFromResource(R.xml.pref_1_spiel);
+        addPreferencesFromResource(R.xml.pref_72_ramsch_verlierer_gewinner);
 
         Preference.OnPreferenceClickListener listener = new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                final String spiel = String.valueOf(preference.getTitle());
+                SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+                String s = String.valueOf(preference.getKey());
+                char c = s.charAt(s.length() - 1);
+                int solist_Relativ = Integer.valueOf(c);
+                int solist_Abs = ((solist_Relativ + infoSingleton.geber) % infoSingleton.spielerzahl);
+                if (solist_Abs == 0) {
+                    solist_Abs = infoSingleton.spielerzahl;
+                }
+                infoSingleton.ramschSolist = solist_Abs;
 
-                SkatInfoSingleton.getInstance().spiel = spiel;
-                Intent intent = new Intent(getApplicationContext(), X2Solist.class);
+                Intent intent;
+                if (SkatInfoSingleton.getInstance().ramschAusgang != SkatInfoSingleton.RAMSCH_DURCHMARSCH) {
+                    intent = new Intent(getApplicationContext(), X73RamschMultiplikator.class);
+                } else {
+                    intent = new Intent(getApplicationContext(),X74RamschAuswertung.class);
+                }
                 startActivity(intent);
 
                 return false;
             }
         };
 
-        String[] names = {"Grand", "Null", "Kreuz", "Pik", "Herz", "Karo"};
+        final SkatInfoSingleton infoSingleton = SkatInfoSingleton.getInstance();
+        String[] spieler = infoSingleton.getPlayingPlayersInOrder();
+
         Preference preference;
-        for (int i = 0; i < names.length; i++) {
-            preference = findPreference(names[i]);
+        String[] keys = {"spieler1", "spieler2", "spieler3"};
+        for (int i = 0; i < keys.length; i++) {
+            preference = findPreference(keys[i]);
+            preference.setTitle(spieler[i]);
             preference.setOnPreferenceClickListener(listener);
         }
-
-        preference = findPreference("Ramsch");
-        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                SkatInfoSingleton.getInstance().spiel = "Ramsch";
-                Intent intent = new Intent(getApplicationContext(), X71RamschAusgang.class);
-                startActivity(intent);
-                return false;
-            }
-        });
     }
 }
