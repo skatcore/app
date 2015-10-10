@@ -121,6 +121,9 @@ public class SkatListActivity extends android.app.Activity {
                     geber = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_GEBER));
                     geber = (geber % spielerzahl) + 1;
                     bockCount = cursor.getInt(cursor.getColumnIndex(DBContract.Entry.COL_BOCK_COUNT));
+                    if (bockCount > 0) {
+                        bockCount -= 1;
+                    }
                     setLastPlayedRound(datum);
                 } catch (Exception e) {
                     String spielerstring = intent.getStringExtra("spieler");
@@ -356,7 +359,7 @@ public class SkatListActivity extends android.app.Activity {
         } else {
             layoutId = R.layout.activity_view_record_3;
         }
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(SkatListActivity.this, layoutId, cursor, from, into, 0);
+        MySimpleCursorAdapter adapter = new MySimpleCursorAdapter(SkatListActivity.this, layoutId, cursor, from, into, 0);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
     }
